@@ -1,6 +1,10 @@
 # macOS
 *.DS_Store
 
+# compiled lex
+sync.sh
+lex.yy.cc
+
 # Prerequisites
 *.d
 

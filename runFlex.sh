@@ -1,2 +1,2 @@
 #!/bin/bash
-flex $1 && gcc lex.yy.c -ll && ./a.out
+flex parser.c && bison btree.y -d && gcc lex.yy.c btree.tab.c -ly 2>/dev/null && ./a.out
