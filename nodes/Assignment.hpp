@@ -5,7 +5,7 @@
 
 namespace NNodes {
 
-    class CAssignment : INode {
+    class CAssignment : IStatement {
     public:
         CAssignment(std::shared_ptr<INode> id, std::shared_ptr<INode> toObject);
         void Visit(NVisitor::IVisitor *visitor) const override;

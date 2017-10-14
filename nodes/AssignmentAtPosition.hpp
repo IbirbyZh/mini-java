@@ -5,7 +5,7 @@
 
 namespace NNodes {
 
-    class CAssignmentAtPosition : INode {
+    class CAssignmentAtPosition : IStatement {
     public:
         CAssignmentAtPosition(std::shared_ptr<INode> id, int atPosition, std::shared_ptr<INode> toObject);
         void Visit(NVisitor::IVisitor *visitor) const override;

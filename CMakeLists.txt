@@ -22,8 +22,23 @@ set(NodeSrc
         nodes/CreateNewArray.cpp nodes/CreateNewArray.hpp
         nodes/GetThisId.cpp nodes/GetThisId.hpp
         nodes/CallMethodParameters.cpp nodes/CallMethodParameters.hpp
+
+        nodes/BasicType.cpp nodes/BasicType.hpp
+        nodes/ClassType.cpp nodes/ClassType.hpp
+
         nodes/StatementSequence.cpp nodes/StatementSequence.hpp
-        nodes/Assignment.cpp nodes/Assignment.hpp nodes/AssignmentAtPosition.cpp nodes/AssignmentAtPosition.hpp)
+        nodes/Assignment.cpp nodes/Assignment.hpp
+        nodes/AssignmentAtPosition.cpp nodes/AssignmentAtPosition.hpp
+        nodes/PrintThing.cpp nodes/PrintThing.hpp
+        nodes/WhileDo.cpp nodes/WhileDo.hpp
+        nodes/IfDoElseDo.cpp nodes/IfDoElseDo.hpp
+
+        nodes/TypedId.cpp nodes/TypedId.hpp
+        nodes/TypedIdSequence.cpp nodes/TypedIdSequence.hpp
+        nodes/MethodSignature.cpp nodes/MethodSignature.hpp
+        nodes/Method.cpp nodes/Method.hpp
+        nodes/MethodSequence.cpp nodes/MethodSequence.hpp
+        )
 
 
 set(VisitorSrc

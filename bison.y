@@ -152,80 +152,80 @@ seq_class
 
 
 type
-  : T_INT T_L_SQUARE T_R_SQUARE
-  | T_BOOLEAN
-  | T_INT
-  | T_ID
+  : T_INT T_L_SQUARE T_R_SQUARE                                     {/*BasicType*/}
+  | T_BOOLEAN                                                       {/*BasicType*/}
+  | T_INT                                                           {/*BasicType*/}
+  | T_ID                                                            {/*ClassType*/}
 ;
 
 
 var
-  : type T_ID T_SEMI
+  : type T_ID T_SEMI                                                {/*TypedId*/}
 ;
 
 
 seq_var
-  : var
-  | seq_var var
+  : var                                                             {/*TypedIdSequence*/}
+  | seq_var var                                                     {/*TypedIdSequence*/}
 ;
 
 
 argument
-  : type T_ID
+  : type T_ID                                                       {/*TypedId*/}
 ;
 
 
 method_params
-  :
-  | argument
-  | argument T_COMMA method_params
+  :                                                                 {/*null*/}
+  | argument                                                        {/*TypedIdSequence*/}
+  | argument T_COMMA method_params                                  {/*TypedIdSequence*/}
 ;
 
 
 method_signature
-  : T_PUBLIC type T_ID T_L_PAREN method_params T_R_PAREN
-  | T_PRIVATE type T_ID T_L_PAREN method_params T_R_PAREN
+  : T_PUBLIC type T_ID T_L_PAREN method_params T_R_PAREN            {/*MethodSignature*/}
+  | T_PRIVATE type T_ID T_L_PAREN method_params T_R_PAREN           {/*MethodSignature*/}
 
 
 method
   : method_signature T_L_BRACE
         seq_var seq_statement T_RETURN exp T_SEMI
-    T_R_BRACE
+    T_R_BRACE                                                       {/*Method*/}
 
   | method_signature T_L_BRACE
         seq_statement T_RETURN exp T_SEMI
-    T_R_BRACE
+    T_R_BRACE                                                       {/*Method*/}
 
   | method_signature T_L_BRACE
         seq_var T_RETURN exp T_SEMI
-    T_R_BRACE
+    T_R_BRACE                                                       {/*Method*/}
 
   | method_signature T_L_BRACE
         T_RETURN exp T_SEMI
-    T_R_BRACE
+    T_R_BRACE                                                       {/*Method*/}
 ;
 
 
 seq_method
-  : method
-  | seq_method method
+  : method                                                          {/*MethodSequence*/}
+  | seq_method method                                               {/*MethodSequence*/}
 ;
 
 
 statement 
   : T_L_BRACE
         seq_statement
-    T_R_BRACE
-  | T_IF T_L_PAREN exp T_R_PAREN statement T_ELSE statement
-  | T_WHILE T_L_PAREN exp T_R_PAREN statement
-  | T_PRINT_LINE T_L_PAREN exp T_R_PAREN T_SEMI
+    T_R_BRACE                                                       {/*wrapper*/}
+  | T_IF T_L_PAREN exp T_R_PAREN statement T_ELSE statement         {/*IfDoElseDo*/}
+  | T_WHILE T_L_PAREN exp T_R_PAREN statement                       {/*WhileDo*/}
+  | T_PRINT_LINE T_L_PAREN exp T_R_PAREN T_SEMI                     {/*PrintThing*/}
   | T_ID T_ASSIGN exp T_SEMI                                        {/*Assignment*/}
   | T_ID T_L_SQUARE exp T_R_SQUARE T_ASSIGN exp T_SEMI              {/*AssignmentAtPosition*/}
 ;
 
 
 seq_statement
-  : statement                                                       {/*wrapper*/}
+  : statement                                                       {/*StatementSequence*/}
   | seq_statement statement                                         {/*StatementSequence*/}
 ;
 
@@ -259,8 +259,8 @@ exp
 
 
 run_method_params
-  :
-  | exp                                                             {/*wrapper*/}
+  :                                                                 {/*null*/}
+  | exp                                                             {/*CallMethodParameters*/}
   | exp T_COMMA run_method_params                                   {/*CallMethodParameters*/}
 ;
 

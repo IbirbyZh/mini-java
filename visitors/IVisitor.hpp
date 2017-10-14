@@ -1,8 +1,14 @@
 #pragma once
 
-#include "Nodes.hpp"
+#define interface struct
+
 
 namespace NNodes {
+    class CBasicType;
+
+    class CClassType;
+
+
     class CIdExpression;
 
     class CIntegerExpression;
@@ -27,18 +33,41 @@ namespace NNodes {
 
     class CCallMethodParameters;
 
-    class CStatementSequence;
 
     class CAssignment;
 
     class CAssignmentAtPosition;
+
+    class CPrintThing;
+
+    class CWhileDo;
+
+    class CIfDoElseDo;
+
+    class CStatementSequence;
+
+
+    class CTypedId;
+
+    class CTypedIdSequence;
+
+    class CMethodSignature;
+
+    class CMethod;
+
+    class CMethodSequence;
 }
+
+#include "Nodes.hpp"
 
 namespace NVisitor {
 
     interface IVisitor {
     public:
         virtual ~IVisitor() {}
+
+        virtual void Visit(const NNodes::CBasicType *const node) = 0;
+        virtual void Visit(const NNodes::CClassType *const node) = 0;
 
         virtual void Visit(const NNodes::CIdExpression *const node) = 0;
         virtual void Visit(const NNodes::CIntegerExpression *const node) = 0;
@@ -52,8 +81,20 @@ namespace NVisitor {
         virtual void Visit(const NNodes::CCreateNewArray *const node) = 0;
         virtual void Visit(const NNodes::CGetThisId *const node) = 0;
         virtual void Visit(const NNodes::CCallMethodParameters *const node) = 0;
-        virtual void Visit(const NNodes::CStatementSequence *const node) = 0;
+
         virtual void Visit(const NNodes::CAssignment *const node) = 0;
         virtual void Visit(const NNodes::CAssignmentAtPosition *const node) = 0;
+        virtual void Visit(const NNodes::CPrintThing *const node) = 0;
+        virtual void Visit(const NNodes::CWhileDo *const node) = 0;
+        virtual void Visit(const NNodes::CIfDoElseDo *const node) = 0;
+        virtual void Visit(const NNodes::CStatementSequence *const node) = 0;
+
+        virtual void Visit(const NNodes::CTypedId *const node) = 0;
+        virtual void Visit(const NNodes::CTypedIdSequence *const node) = 0;
+        virtual void Visit(const NNodes::CMethodSignature *const node) = 0;
+        virtual void Visit(const NNodes::CMethod *const node) = 0;
+        virtual void Visit(const NNodes::CMethodSequence *const node) = 0;
+
     };
 }
+

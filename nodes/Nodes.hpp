@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include "INode.hpp"
 #include "IdExpression.hpp"
 #include "IntegerExpression.hpp"
@@ -13,6 +14,22 @@
 #include "CreateNewArray.hpp"
 #include "GetThisId.hpp"
 #include "CallMethodParameters.hpp"
-#include "StatementSequence.hpp"
+
+
+#include "BasicType.hpp"
+#include "ClassType.hpp"
+
+
 #include "Assignment.hpp"
 #include "AssignmentAtPosition.hpp"
+#include "PrintThing.hpp"
+#include "WhileDo.hpp"
+#include "IfDoElseDo.hpp"
+#include "StatementSequence.hpp"
+
+
+#include "TypedId.hpp"
+#include "TypedIdSequence.hpp"
+#include "MethodSignature.hpp"
+#include "Method.hpp"
+#include "MethodSequence.hpp"
