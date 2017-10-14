@@ -16,7 +16,7 @@ set(FlexOutput ${CMAKE_SOURCE_DIR}/src/flex/scanner.c)
 find_package(BISON REQUIRED)
 if (BISON_FOUND)
     add_custom_command(
-            OUTPUT ${BisonOutput}
+            OUTPUT ${BisonOutput} $(BisonTokens)
             COMMAND ${BISON_EXECUTABLE}
             --defines=${BisonTokens}
             --output=${BisonOutput}
@@ -36,7 +36,7 @@ if (FLEX_FOUND)
             COMMAND ${FLEX_EXECUTABLE}
             --outfile=${FlexOutput}
             ${FlexFile}
-            MAIN_DEPENDENCY ${FlexFile}
+            MAIN_DEPENDENCY ${FlexFile} ${BisonTokens}
             COMMENT "Generating scanner.cpp from ${FlexFile}"
     )
 endif ()
