@@ -1,8 +1,9 @@
 %{
     #include <stdio.h>
-    #include "btree.tab.h"
+    #include <stdlib.h>
+    #include "tokens.h"
     
-    #define NICE_FORMATTING 1
+    
     int TAB_SIZE = 4;
 
     int lineNumber = 1;
@@ -72,8 +73,9 @@ MOD                             "%"
 OR                              "||"
 BANG                            "!"
 
+LENGTH                          "length"
 PRINT_LINE                      "System.out.println"
-MAIN                            static[ \t\n]+void[ \t\n]+main
+MAIN                            static[ \t]+void[ \t]+main
 STRING                          String
 
 ID                              {LETTER}({LETTER}|{DIGIT})*
@@ -120,27 +122,24 @@ INTEGER_NUMBER                  {POSITIVE}({DIGIT})*|{ZERO}
 {OR}                            return T_OR;
 {BANG}                          return T_BANG;
 
+{LENGTH}                        return T_LENGTH;
 {PRINT_LINE}                    return T_PRINT_LINE;
 {MAIN}                          return T_MAIN;
 {STRING}                        return T_STRING;
 
-{ID}                            return T_ID;
-{INTEGER_NUMBER}                return T_INTEGER_NUMBER;
+{ID}                            yylval.strValue=yytext; return T_ID;
+{INTEGER_NUMBER}                yylval.intValue=atoi(yytext); return T_INTEGER_NUMBER;
 
 "//".*
 \n                              {
                                     lineNumber += 1;
                                     columnNumber = 1;
-                                    if( NICE_FORMATTING ) {
-                                        return T_END_LINE;
-                                    }
                                 }
 
 [\t]+                              columnNumber += (TAB_SIZE - 1) * yyleng;
 
 [ \r]+
 <<EOF>>                         {
-                                    printf( "EOF\n" );
                                     return 0;
                                 }
 

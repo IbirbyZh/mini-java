@@ -1,9 +1,12 @@
 # macOS
 *.DS_Store
+.idea
 
-# compiled lex
-sync.sh
-lex.yy.cc
+# compiled files
+src
+
+# cmake
+cmake-build-debug
 
 # Prerequisites
 *.d
