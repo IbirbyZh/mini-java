@@ -83,20 +83,25 @@
 
 %%
 goal
-  : class_main T_END
-  | class_main seq_class T_END
+  : class_main T_END                                                            {printf("only main\n");}
+  | class_main seq_class T_END                                                  {printf("not only main\n");}
+;
+
+
+main_signature
+  : T_PUBLIC T_MAIN T_L_PAREN T_STRING T_L_SQUARE T_R_SQUARE T_ID T_R_PAREN
 ;
 
 
 class_main 
   : T_CLASS T_ID T_L_BRACE
-        T_PUBLIC T_MAIN T_L_PAREN T_STRING T_L_SQUARE T_R_SQUARE T_ID T_R_PAREN T_L_BRACE
+         main_signature T_L_BRACE
             seq_statement
         T_R_BRACE
     T_R_BRACE
 
   | T_CLASS T_ID T_L_BRACE
-        T_PUBLIC T_MAIN T_L_PAREN T_STRING T_L_SQUARE T_R_SQUARE T_ID T_R_PAREN T_L_BRACE
+        main_signature T_L_BRACE
             T_R_BRACE
         T_R_BRACE
 ;
