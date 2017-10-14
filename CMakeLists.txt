@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.7)
 project(mini_java)
 
-set(BisonFile ${CMAKE_SOURCE_DIR}/btree.y)
+set(BisonFile ${CMAKE_SOURCE_DIR}/bison.y)
 set(BisonOutput ${CMAKE_SOURCE_DIR}/src/bison/parser.c)
 set(BisonTokens ${CMAKE_SOURCE_DIR}/src/bison/tokens.h)
 
-set(FlexFile ${CMAKE_SOURCE_DIR}/parser.c)
+set(FlexFile ${CMAKE_SOURCE_DIR}/flex.y)
 set(FlexOutput ${CMAKE_SOURCE_DIR}/src/flex/scanner.c)
 
 find_package(BISON REQUIRED)
