@@ -44,7 +44,7 @@ set(FlexOutput ${CMAKE_SOURCE_DIR}/src/flex/scanner.c)
 find_package(BISON REQUIRED)
 if (BISON_FOUND)
     add_custom_command(
-            OUTPUT ${BisonOutput} $(BisonTokens)
+            OUTPUT ${BisonOutput} ${BisonTokens}
             COMMAND ${BISON_EXECUTABLE}
             --defines=${BisonTokens}
             --output=${BisonOutput}
@@ -72,4 +72,4 @@ endif ()
 add_executable(mini-java ${BisonOutput} ${FlexOutput})
 
 include_directories(${NonTerminalNodes} ${Visitors})
-add_library(nodes ${NodeSrc} ${VisitorSrc})
+add_library(nodes ${NodeHeaders} ${VisitorHeaders} ${NodeSrc} ${VisitorSrc})
