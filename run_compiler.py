@@ -26,6 +26,7 @@ if __name__ == '__main__':
             )
     except subprocess.CalledProcessError:
         print 'Build Failed'
+        raise
 
     with open(args.input) as input_stream:
         subprocess.call([args.executable], stdin=input_stream)

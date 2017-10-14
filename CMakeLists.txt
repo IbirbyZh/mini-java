@@ -1,9 +1,37 @@
 cmake_minimum_required(VERSION 3.7)
 project(mini_java)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_C_FLAGS "-ly")
+
 
 file(MAKE_DIRECTORY src)
 file(MAKE_DIRECTORY src/bison)
 file(MAKE_DIRECTORY src/flex)
+
+set(NonTerminalNodes ${CMAKE_SOURCE_DIR}/nodes/non_terminal)
+set(TerminalNodes ${CMAKE_SOURCE_DIR}/nodes/terminal)
+
+set(NodeHeaders
+        ${NonTerminalNodes}/IId.cpp
+        )
+
+
+set(NodeSrc
+        ${NonTerminalNodes}/IId.cpp
+        )
+
+
+set(Visitors ${CMAKE_SOURCE_DIR}/visitors)
+
+set(VisitorHeaders
+        ${Visitors}/IVisitor.hpp
+        ${Visitors}/PrettyPrinter.hpp
+        )
+
+set(VisitorSrc
+        ${Visitors}/PrettyPrinter.cpp
+        )
+
 
 set(BisonFile ${CMAKE_SOURCE_DIR}/bison.y)
 set(BisonOutput ${CMAKE_SOURCE_DIR}/src/bison/parser.c)
@@ -28,7 +56,6 @@ if (BISON_FOUND)
 endif ()
 
 find_package(FLEX REQUIRED)
-
 if (FLEX_FOUND)
     include_directories(${CMAKE_SOURCE_DIR}/src/bison)
     add_custom_command(
@@ -41,6 +68,8 @@ if (FLEX_FOUND)
     )
 endif ()
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_C_FLAGS "-ly")
+
 add_executable(mini-java ${BisonOutput} ${FlexOutput})
+
+include_directories(${NonTerminalNodes} ${Visitors})
+add_library(nodes ${NodeSrc} ${VisitorSrc})
