@@ -2,6 +2,6 @@
 
 #include <iostream>
 
-void NVisitor::CPrettyPrinter::Visit(const NNonTerminal::CId *const node) const {
-    std::cout << node->GetId() << std::endl;
+void NVisitor::CPrettyPrinter::Visit(const NNodes::CIdExpression *const node) {
+    std::cout << "ID" << std::endl;
 }

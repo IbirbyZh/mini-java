@@ -1,6 +1,7 @@
 %{
     #include <stdio.h>
     #include "tokens.h"
+    #include "Nodes.hpp"
 
     extern "C" int yylex();
     void yyerror(char *s);
@@ -91,18 +92,18 @@ goal
 
 
 main_signature
-  : T_PUBLIC T_MAIN T_L_PAREN T_STRING T_L_SQUARE T_R_SQUARE id T_R_PAREN
+  : T_PUBLIC T_MAIN T_L_PAREN T_STRING T_L_SQUARE T_R_SQUARE T_ID T_R_PAREN
 ;
 
 
 class_main 
-  : T_CLASS id T_L_BRACE
+  : T_CLASS T_ID T_L_BRACE
          main_signature T_L_BRACE
             seq_statement
         T_R_BRACE
     T_R_BRACE
 
-  | T_CLASS id T_L_BRACE
+  | T_CLASS T_ID T_L_BRACE
         main_signature T_L_BRACE
             T_R_BRACE
         T_R_BRACE
@@ -110,36 +111,36 @@ class_main
 
 
 class
-  : T_CLASS id T_L_BRACE
+  : T_CLASS T_ID T_L_BRACE
         seq_var
         seq_method
     T_R_BRACE
 
-  | T_CLASS id T_L_BRACE
+  | T_CLASS T_ID T_L_BRACE
         seq_method
     T_R_BRACE
 
-  | T_CLASS id T_L_BRACE
+  | T_CLASS T_ID T_L_BRACE
         seq_var
     T_R_BRACE
 
-  | T_CLASS id T_L_BRACE
+  | T_CLASS T_ID T_L_BRACE
     T_R_BRACE
 
-  | T_CLASS id T_L_BRACE T_EXTENDS id
+  | T_CLASS T_ID T_L_BRACE T_EXTENDS T_ID
         seq_var
         seq_method
     T_R_BRACE
 
-  | T_CLASS id T_L_BRACE T_EXTENDS id
+  | T_CLASS T_ID T_L_BRACE T_EXTENDS T_ID
         seq_method
     T_R_BRACE
 
-  | T_CLASS id T_L_BRACE T_EXTENDS id
+  | T_CLASS T_ID T_L_BRACE T_EXTENDS T_ID
         seq_var
     T_R_BRACE
 
-  | T_CLASS id T_L_BRACE T_EXTENDS id
+  | T_CLASS T_ID T_L_BRACE T_EXTENDS T_ID
     T_R_BRACE
 ;
 
@@ -154,12 +155,12 @@ type
   : T_INT T_L_SQUARE T_R_SQUARE
   | T_BOOLEAN
   | T_INT
-  | id
+  | T_ID
 ;
 
 
 var
-  : type id T_SEMI
+  : type T_ID T_SEMI
 ;
 
 
@@ -169,21 +170,21 @@ seq_var
 ;
 
 
-seq_method_params
-  : type id
-  | seq_method_params T_COMMA type id
+argument
+  : type T_ID
 ;
 
 
 method_params
   :
-  | seq_method_params
+  | argument
+  | argument T_COMMA method_params
 ;
 
 
 method_signature
-  : T_PUBLIC type id T_L_PAREN method_params T_R_PAREN
-  | T_PRIVATE type id T_L_PAREN method_params T_R_PAREN
+  : T_PUBLIC type T_ID T_L_PAREN method_params T_R_PAREN
+  | T_PRIVATE type T_ID T_L_PAREN method_params T_R_PAREN
 
 
 method
@@ -218,68 +219,55 @@ statement
   | T_IF T_L_PAREN exp T_R_PAREN statement T_ELSE statement
   | T_WHILE T_L_PAREN exp T_R_PAREN statement
   | T_PRINT_LINE T_L_PAREN exp T_R_PAREN T_SEMI
-  | id T_ASSIGN exp T_SEMI
-  | id T_L_SQUARE exp T_R_SQUARE T_ASSIGN exp T_SEMI
+  | T_ID T_ASSIGN exp T_SEMI                                        {/*Assignment*/}
+  | T_ID T_L_SQUARE exp T_R_SQUARE T_ASSIGN exp T_SEMI              {/*AssignmentAtPosition*/}
 ;
 
 
 seq_statement
-  : statement
-  | seq_statement statement
+  : statement                                                       {/*wrapper*/}
+  | seq_statement statement                                         {/*StatementSequence*/}
 ;
 
 
 operation
-  : exp T_AND exp
-  | exp T_OR exp
-  | exp T_LESS exp
-  | exp T_PLUS exp
-  | exp T_MINUS exp
-  | exp T_MULT exp
-  | exp T_MOD exp
+  : exp T_AND exp                                                   {/*BooleanArithmeticOperation*/}
+  | exp T_OR exp                                                    {/*BooleanArithmeticOperation*/}
+  | exp T_LESS exp                                                  {/*BooleanArithmeticOperation*/}
+  | exp T_PLUS exp                                                  {/*IntegerArithmeticOperation*/}
+  | exp T_MINUS exp                                                 {/*IntegerArithmeticOperation*/}
+  | exp T_MULT exp                                                  {/*IntegerArithmeticOperation*/}
+  | exp T_MOD exp                                                   {/*IntegerArithmeticOperation*/}
 ;
 
 
 exp
-  : operation
-  | exp T_L_SQUARE exp T_R_SQUARE
-  | exp T_DOT T_LENGTH
-  | exp T_DOT id T_L_PAREN run_method_params T_R_PAREN
-  | integer_number
-  | T_TRUE
-  | T_FALSE
-  | id
-  | T_THIS
-  | T_NEW T_INT T_L_SQUARE exp T_R_SQUARE
-  | T_NEW id T_L_PAREN T_R_PAREN
-  | T_BANG exp
-  | T_L_PAREN exp T_R_PAREN
-;
-
-
-seq_run_method_params
-  : exp
-  | seq_run_method_params T_COMMA exp
+  : operation                                                       {/*wrapper*/}
+  | exp T_L_SQUARE exp T_R_SQUARE                                   {/*GetItemAtPosition*/}
+  | exp T_DOT T_LENGTH                                              {/*GetLength*/}
+  | exp T_DOT T_ID T_L_PAREN run_method_params T_R_PAREN            {/*RunMethod*/}
+  | T_INTEGER_NUMBER                                                {printf("%d\n", $1);/*IntegerExpression*/}
+  | T_TRUE                                                          {/*BooleanExpression*/}
+  | T_FALSE                                                         {/*BooleanExpression*/}
+  | T_ID                                                            {/*IdExpression*/}
+  | T_THIS                                                          {/*GetThisId*/}
+  | T_NEW T_INT T_L_SQUARE exp T_R_SQUARE                           {/*CreateNewArray*/}
+  | T_NEW T_ID T_L_PAREN T_R_PAREN                                  {/*CreateNewObject*/}
+  | T_BANG exp                                                      {/*BooleanArithmeticOperation*/}
+  | T_L_PAREN exp T_R_PAREN                                         {/*wrapper*/}
 ;
 
 
 run_method_params
   :
-  | seq_run_method_params
-;
-
-id
-  : T_ID    {printf("%s\n", $1);}
-;
-
-integer_number
-  : T_INTEGER_NUMBER  {printf("%d\n", $1);}
+  | exp                                                             {/*wrapper*/}
+  | exp T_COMMA run_method_params                                   {/*CallMethodParameters*/}
 ;
 
 %%
 
 void yyerror(char* s) {
-    printf("Fucking bullshit AGAIN %s at %d,%d:%d\n",
+    printf("AGAIN %s at %d,%d:%d\n",
         s, yylloc.first_line, yylloc.first_column, yylloc.last_column);
 }
 

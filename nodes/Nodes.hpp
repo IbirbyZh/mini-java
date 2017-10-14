@@ -1,0 +1,18 @@
+#pragma once
+
+#include "INode.hpp"
+#include "IdExpression.hpp"
+#include "IntegerExpression.hpp"
+#include "IntegerArithmeticOperation.hpp"
+#include "BooleanExpression.hpp"
+#include "BooleanArithmeticOperation.hpp"
+#include "GetItemAtPosition.hpp"
+#include "CallMethod.hpp"
+#include "GetLength.hpp"
+#include "CreateNewObject.hpp"
+#include "CreateNewArray.hpp"
+#include "GetThisId.hpp"
+#include "CallMethodParameters.hpp"
+#include "StatementSequence.hpp"
+#include "Assignment.hpp"
+#include "AssignmentAtPosition.hpp"
