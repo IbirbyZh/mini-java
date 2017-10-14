@@ -1,11 +1,9 @@
 %{
     #include <stdio.h>
     #include "tokens.h"
-    #define NICE_FORMATTING 1
-    void yyerror(char *s)
-    {
-      fprintf(stderr, "ERROR line %d %d:%d %s\n", yylloc.first_line, yylloc.first_column, yylloc.last_column, s);
-    }
+
+    extern "C" int yylex();
+    void yyerror(char *s);
 %}
 
 %token T_CLASS
@@ -279,3 +277,12 @@ integer_number
 ;
 
 %%
+
+void yyerror(char* s) {
+    printf("Fucking bullshit AGAIN %s at %d,%d:%d\n",
+        s, yylloc.first_line, yylloc.first_column, yylloc.last_column);
+}
+
+int main(void) {
+    yyparse();
+}
