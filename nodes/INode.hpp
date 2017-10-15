@@ -3,7 +3,10 @@
 
 namespace NVisitor {
     class IVisitor;
+
     class CPrettyPythonPrinter;
+
+    class CGraphvizPrinter;
 }
 
 namespace NNodes {
@@ -13,6 +16,7 @@ namespace NNodes {
 
         virtual void Visit(NVisitor::IVisitor *visitor) const = 0;
     };
+
     typedef INode IType;
     typedef INode IStatement;
 }

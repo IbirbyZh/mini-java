@@ -8,6 +8,8 @@ namespace NNodes {
     class CIfDoElseDo : public IStatement {
         friend class NVisitor::CPrettyPythonPrinter;
 
+        friend class NVisitor::CGraphvizPrinter;
+
     public:
         CIfDoElseDo(std::shared_ptr<INode> ifCondition, std::shared_ptr<INode> doWhat,
                     std::shared_ptr<INode> doOtherwise);

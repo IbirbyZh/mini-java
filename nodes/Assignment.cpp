@@ -1,6 +1,6 @@
 #include "Assignment.hpp"
 
-NNodes::CAssignment::CAssignment(const char * id,
+NNodes::CAssignment::CAssignment(const char *id,
                                  const std::shared_ptr<NNodes::INode> toObject) : lValue(id), rValue(toObject) {
 
 }

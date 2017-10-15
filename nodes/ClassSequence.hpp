@@ -9,6 +9,8 @@ namespace NNodes {
     class CClassSequence : public INode {
         friend class NVisitor::CPrettyPythonPrinter;
 
+        friend class NVisitor::CGraphvizPrinter;
+
     public:
         CClassSequence(std::shared_ptr<CClassSequence> classes,
                        std::shared_ptr<CClass> class_);

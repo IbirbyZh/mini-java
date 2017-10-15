@@ -8,6 +8,8 @@ namespace NNodes {
     class CPrintThing : public IStatement {
         friend class NVisitor::CPrettyPythonPrinter;
 
+        friend class NVisitor::CGraphvizPrinter;
+
     public:
         explicit CPrintThing(std::shared_ptr<INode> whatObject);
         void Visit(NVisitor::IVisitor *visitor) const override;

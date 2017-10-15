@@ -10,8 +10,10 @@ namespace NNodes {
     class CMain : public INode {
         friend class NVisitor::CPrettyPythonPrinter;
 
+        friend class NVisitor::CGraphvizPrinter;
+
     public:
-        CMain(const char * className, const char * inputName,
+        CMain(const char *className, const char *inputName,
               std::shared_ptr<CStatementSequence> mainStatements);
 
         void Visit(NVisitor::IVisitor *visitor) const override;

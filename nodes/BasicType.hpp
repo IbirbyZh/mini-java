@@ -8,6 +8,8 @@ namespace NNodes {
     class CBasicType : public IType {
         friend class NVisitor::CPrettyPythonPrinter;
 
+        friend class NVisitor::CGraphvizPrinter;
+
     public:
         enum TType {
             BT_INT,

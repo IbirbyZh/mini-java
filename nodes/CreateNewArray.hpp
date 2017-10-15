@@ -8,6 +8,8 @@ namespace NNodes {
     class CCreateNewArray : public INode {
         friend class NVisitor::CPrettyPythonPrinter;
 
+        friend class NVisitor::CGraphvizPrinter;
+
     public:
         explicit CCreateNewArray(std::shared_ptr<INode> arraySize);
         void Visit(NVisitor::IVisitor *visitor) const override;

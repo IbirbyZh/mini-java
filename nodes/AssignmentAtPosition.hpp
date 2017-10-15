@@ -9,8 +9,10 @@ namespace NNodes {
     class CAssignmentAtPosition : public IStatement {
         friend class NVisitor::CPrettyPythonPrinter;
 
+        friend class NVisitor::CGraphvizPrinter;
+
     public:
-        CAssignmentAtPosition(const char * id, std::shared_ptr<INode> atPosition,
+        CAssignmentAtPosition(const char *id, std::shared_ptr<INode> atPosition,
                               std::shared_ptr<INode> toObject);
         void Visit(NVisitor::IVisitor *visitor) const override;
     private:

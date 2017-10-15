@@ -11,6 +11,8 @@ namespace NNodes {
     class CMethod : public INode {
         friend class NVisitor::CPrettyPythonPrinter;
 
+        friend class NVisitor::CGraphvizPrinter;
+
     public:
         CMethod(std::shared_ptr<CMethodSignature> methodSignature,
                 std::shared_ptr<CTypedIdSequence> methodVariables,

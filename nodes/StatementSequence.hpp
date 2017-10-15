@@ -8,6 +8,8 @@ namespace NNodes {
     class CStatementSequence : public INode {
         friend class NVisitor::CPrettyPythonPrinter;
 
+        friend class NVisitor::CGraphvizPrinter;
+
     public:
         CStatementSequence(std::shared_ptr<CStatementSequence> statements,
                            std::shared_ptr<IStatement> statement);

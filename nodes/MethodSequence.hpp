@@ -9,9 +9,11 @@ namespace NNodes {
     class CMethodSequence : public INode {
         friend class NVisitor::CPrettyPythonPrinter;
 
+        friend class NVisitor::CGraphvizPrinter;
+
     public:
         CMethodSequence(std::shared_ptr<CMethodSequence> methods,
-                           std::shared_ptr<CMethod> method);
+                        std::shared_ptr<CMethod> method);
         void Visit(NVisitor::IVisitor *visitor) const override;
 
     private:

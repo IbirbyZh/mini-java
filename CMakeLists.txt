@@ -40,13 +40,16 @@ set(NodeSrc
         nodes/MethodSequence.cpp nodes/MethodSequence.hpp
 
         nodes/Class.cpp nodes/Class.hpp
-        nodes/ClassSequence.cpp nodes/ClassSequence.hpp nodes/Main.cpp nodes/Main.hpp nodes/Program.cpp nodes/Program.hpp)
+        nodes/ClassSequence.cpp nodes/ClassSequence.hpp
+        nodes/Main.cpp nodes/Main.hpp
+        nodes/Program.cpp nodes/Program.hpp
+        )
 
 
 set(VisitorSrc
         visitors/IVisitor.hpp
-        visitors/PrettyPythonPrinter.hpp
-        visitors/PrettyPythonPrinter.cpp
+        visitors/PrettyPythonPrinter.hpp visitors/PrettyPythonPrinter.cpp
+        visitors/GraphvizPrinter.cpp visitors/GraphvizPrinter.hpp
         )
 
 

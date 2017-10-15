@@ -1,7 +1,7 @@
 #include "Program.hpp"
 
 NNodes::CProgram::CProgram(const std::shared_ptr<NNodes::CMain> mainClass,
-                             const std::shared_ptr<NNodes::CClassSequence> additionalClasses)
+                           const std::shared_ptr<NNodes::CClassSequence> additionalClasses)
         : main(mainClass), classes(additionalClasses) {
 
 }
