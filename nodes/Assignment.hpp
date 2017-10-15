@@ -2,15 +2,16 @@
 
 #include "INode.hpp"
 #include <memory>
+#include <string>
 
 namespace NNodes {
 
-    class CAssignment : IStatement {
+    class CAssignment : public IStatement {
     public:
-        CAssignment(std::shared_ptr<INode> id, std::shared_ptr<INode> toObject);
+        CAssignment(const char *id, std::shared_ptr<INode> toObject);
         void Visit(NVisitor::IVisitor *visitor) const override;
     private:
-        const std::shared_ptr<INode> lValue;
+        const std::string lValue;
         const std::shared_ptr<INode> rValue;
     };
 }

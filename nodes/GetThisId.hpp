@@ -4,7 +4,7 @@
 
 namespace NNodes {
 
-    class CGetThisId : INode {
+    class CGetThisId : public INode {
     public:
         CGetThisId();
         void Visit(NVisitor::IVisitor *visitor) const override;

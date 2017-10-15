@@ -1,14 +1,17 @@
 %{
+    #include "Nodes.hpp"
+    using namespace NNodes;
+    #include "tokens.h"
+
     #include <stdio.h>
     #include <stdlib.h>
-    #include "tokens.h"
-    
-    
+
+
     int TAB_SIZE = 4;
 
     int lineNumber = 1;
     int columnNumber = 1;
-    
+
     void print_position() {
         printf("%d %d ", lineNumber, columnNumber - yyleng);
     }

@@ -5,7 +5,7 @@
 
 namespace NNodes {
 
-    class CClassType : IType {
+    class CClassType : public IType {
     public:
         explicit CClassType(const char *className);
         void Visit(NVisitor::IVisitor *visitor) const override;

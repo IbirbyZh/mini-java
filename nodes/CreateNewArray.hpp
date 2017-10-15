@@ -1,14 +1,15 @@
 #pragma once
 
 #include "INode.hpp"
+#include <memory>
 
 namespace NNodes {
 
-    class CCreateNewArray : INode {
+    class CCreateNewArray : public INode {
     public:
-        explicit CCreateNewArray(int arraySize);
+        explicit CCreateNewArray(std::shared_ptr<INode> arraySize);
         void Visit(NVisitor::IVisitor *visitor) const override;
     private:
-        const int size;
+        const std::shared_ptr<INode> size;
     };
 }

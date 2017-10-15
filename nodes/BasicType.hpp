@@ -5,7 +5,7 @@
 
 namespace NNodes {
 
-    class CBasicType : IType {
+    class CBasicType : public IType {
     public:
         enum TType {
             BT_INT,

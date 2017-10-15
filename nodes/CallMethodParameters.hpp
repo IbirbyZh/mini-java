@@ -5,7 +5,7 @@
 
 namespace NNodes {
 
-    class CCallMethodParameters : INode {
+    class CCallMethodParameters : public INode {
     public:
         CCallMethodParameters(std::shared_ptr<INode> callParameter,
                               std::shared_ptr<CCallMethodParameters> nextParameters);

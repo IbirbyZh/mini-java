@@ -5,7 +5,7 @@
 
 namespace NNodes {
 
-    class CStatementSequence : INode {
+    class CStatementSequence : public INode {
     public:
         CStatementSequence(std::shared_ptr<CStatementSequence> statements,
                            std::shared_ptr<IStatement> statement);

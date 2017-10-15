@@ -8,7 +8,7 @@
 
 namespace NNodes {
 
-    class CMethod : INode {
+    class CMethod : public INode {
     public:
         CMethod(std::shared_ptr<CMethodSignature> methodSignature,
                 std::shared_ptr<CTypedIdSequence> methodVariables,

@@ -1,8 +1,8 @@
 #include "CallMethod.hpp"
 
-NNodes::CRunMethod::CRunMethod(const std::shared_ptr<NNodes::INode> fromObject, const char *const methodName)
-        : object(fromObject), name(methodName) {}
+NNodes::CCallMethod::CCallMethod(const std::shared_ptr<NNodes::INode> fromObject, const char *const methodName, const std::shared_ptr<CCallMethodParameters>methodParameters)
+        : object(fromObject), name(methodName), parameters(methodParameters) {}
 
-void NNodes::CRunMethod::Visit(NVisitor::IVisitor *visitor) const {
+void NNodes::CCallMethod::Visit(NVisitor::IVisitor *visitor) const {
     visitor->Visit(this);
 }

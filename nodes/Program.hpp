@@ -7,7 +7,7 @@
 
 namespace NNodes {
 
-    class CProgram : INode {
+    class CProgram : public INode {
     public:
         CProgram(std::shared_ptr<CMain> mainClass,
                   std::shared_ptr<CClassSequence> additionalClasses);

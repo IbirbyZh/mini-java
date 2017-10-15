@@ -55,7 +55,7 @@ set(BisonOutput ${CMAKE_SOURCE_DIR}/src/bison/parser.cpp)
 set(BisonTokens ${CMAKE_SOURCE_DIR}/src/bison/tokens.h)
 
 set(FlexFile ${CMAKE_SOURCE_DIR}/flex.y)
-set(FlexOutput ${CMAKE_SOURCE_DIR}/src/flex/scanner.c)
+set(FlexOutput ${CMAKE_SOURCE_DIR}/src/flex/scanner.cpp)
 
 find_package(BISON 3.)
 if (NOT BISON_FOUND)

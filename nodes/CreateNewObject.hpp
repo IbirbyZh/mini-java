@@ -5,7 +5,7 @@
 
 namespace NNodes {
 
-    class CCreateNewObject : INode {
+    class CCreateNewObject : public INode {
     public:
         explicit CCreateNewObject(const char *className);
         void Visit(NVisitor::IVisitor *visitor) const override;

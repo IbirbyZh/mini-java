@@ -8,7 +8,7 @@
 
 namespace NNodes {
 
-    class CClass : INode {
+    class CClass : public INode {
     public:
         CClass(const char *className, std::shared_ptr<CTypedIdSequence> classVariables,
                std::shared_ptr<CMethodSequence> classMethods, const char *extendsClassName);

@@ -5,7 +5,7 @@
 
 namespace NNodes {
 
-    class CBooleanArithmeticOperation : INode {
+    class CBooleanArithmeticOperation : public INode {
     public:
         enum TOperation {
             T_AND,

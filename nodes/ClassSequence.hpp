@@ -6,7 +6,7 @@
 
 namespace NNodes {
 
-    class CClassSequence : INode {
+    class CClassSequence : public INode {
     public:
         CClassSequence(std::shared_ptr<CClassSequence> classes,
                        std::shared_ptr<CClass> class_);

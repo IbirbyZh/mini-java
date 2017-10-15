@@ -5,7 +5,7 @@
 
 namespace NNodes {
 
-    class CIdExpression : INode {
+    class CIdExpression : public INode {
     public:
         explicit CIdExpression(const char *name);
         void Visit(NVisitor::IVisitor *visitor) const override;

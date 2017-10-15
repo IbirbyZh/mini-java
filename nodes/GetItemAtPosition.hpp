@@ -5,13 +5,13 @@
 
 namespace NNodes {
 
-    class CGetItemAtPosition : INode {
+    class CGetItemAtPosition : public INode {
     public:
-        CGetItemAtPosition(const std::shared_ptr<INode> fromObject, int atPosition);
+        CGetItemAtPosition(const std::shared_ptr<INode> fromObject, const std::shared_ptr<INode> atPosition);
 
         void Visit(NVisitor::IVisitor *visitor) const override;
     private:
         const std::shared_ptr<INode> object;
-        int position;
+        const std::shared_ptr<INode> position;
     };
 }

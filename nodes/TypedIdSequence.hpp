@@ -6,7 +6,7 @@
 
 namespace NNodes {
 
-    class CTypedIdSequence : INode {
+    class CTypedIdSequence : public INode {
     public:
         CTypedIdSequence(std::shared_ptr<CTypedIdSequence> typedIds,
                         std::shared_ptr<INode> typedId);

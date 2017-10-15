@@ -7,7 +7,7 @@
 
 namespace NNodes {
 
-    class CMain : INode {
+    class CMain : public INode {
     public:
         CMain(const char *className, const char *inputName,
               std::shared_ptr<CStatementSequence> mainStatements);

@@ -8,7 +8,7 @@
 
 namespace NNodes {
 
-    class CMethodSignature : INode {
+    class CMethodSignature : public INode {
     public:
         CMethodSignature(bool isPrivate_, std::shared_ptr<IType> returnType, const char *methodName,
                          std::shared_ptr<CTypedIdSequence> methodParameters);

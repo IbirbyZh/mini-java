@@ -7,7 +7,7 @@
 
 namespace NNodes {
 
-    class CTypedId : INode {
+    class CTypedId : public INode {
     public:
         CTypedId(std::shared_ptr<IType> objectType, const char *objectName);
 

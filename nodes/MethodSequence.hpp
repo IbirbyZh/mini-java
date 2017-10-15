@@ -6,7 +6,7 @@
 
 namespace NNodes {
 
-    class CMethodSequence : INode {
+    class CMethodSequence : public INode {
     public:
         CMethodSequence(std::shared_ptr<CMethodSequence> methods,
                            std::shared_ptr<CMethod> method);

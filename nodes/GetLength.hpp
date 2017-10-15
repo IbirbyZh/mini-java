@@ -5,7 +5,7 @@
 
 namespace NNodes {
 
-    class CGetLength : INode {
+    class CGetLength : public INode {
     public:
         explicit CGetLength(std::shared_ptr<INode> fromObject);
         void Visit(NVisitor::IVisitor *visitor) const override;

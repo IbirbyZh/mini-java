@@ -5,7 +5,7 @@
 
 namespace NNodes {
 
-    class CPrintThing : IStatement {
+    class CPrintThing : public IStatement {
     public:
         explicit CPrintThing(std::shared_ptr<INode> whatObject);
         void Visit(NVisitor::IVisitor *visitor) const override;

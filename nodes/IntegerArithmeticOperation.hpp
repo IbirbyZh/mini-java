@@ -5,7 +5,7 @@
 
 namespace NNodes {
 
-    class CIntegerArithmeticOperation : INode {
+    class CIntegerArithmeticOperation : public INode {
     public:
         enum TOperation {
             T_PLUS,

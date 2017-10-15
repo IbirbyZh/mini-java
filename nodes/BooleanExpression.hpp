@@ -4,9 +4,9 @@
 
 namespace NNodes {
 
-    class CBooleanExpression : INode {
+    class CBooleanExpression : public INode {
     public:
-        explicit CBooleanExpression(bool number);
+        explicit CBooleanExpression(bool isTrue);
 
         void Visit(NVisitor::IVisitor *visitor) const override;
 

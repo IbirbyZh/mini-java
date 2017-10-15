@@ -21,7 +21,7 @@ namespace NNodes {
 
     class CGetItemAtPosition;
 
-    class CRunMethod;
+    class CCallMethod;
 
     class CGetLength;
 
@@ -85,7 +85,7 @@ namespace NVisitor {
         virtual void Visit(const NNodes::CBooleanExpression *const node) = 0;
         virtual void Visit(const NNodes::CBooleanArithmeticOperation *const node) = 0;
         virtual void Visit(const NNodes::CGetItemAtPosition *const node) = 0;
-        virtual void Visit(const NNodes::CRunMethod *const node) = 0;
+        virtual void Visit(const NNodes::CCallMethod *const node) = 0;
         virtual void Visit(const NNodes::CGetLength *const node) = 0;
         virtual void Visit(const NNodes::CCreateNewObject *const node) = 0;
         virtual void Visit(const NNodes::CCreateNewArray *const node) = 0;
