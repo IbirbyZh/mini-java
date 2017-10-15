@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IVisitor.hpp"
+#include <string>
 
 namespace NVisitor {
     class CGraphvizPrinter : public IVisitor {
@@ -35,6 +36,10 @@ namespace NVisitor {
         void Visit(const NNodes::CMain *const node) override;
         void Visit(const NNodes::CProgram *const node) override;
     private:
+        static std::string formatNode(const NNodes::INode *node, const std::string tag = "");
+        static void printNode(const std::string node, const std::string label);
+        static void printEdge(const std::string parent, const std::string son, const std::string label = "");
+
     };
 }
 

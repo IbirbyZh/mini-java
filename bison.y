@@ -13,8 +13,8 @@
     using namespace NNodes;
     #include <iostream>
     #include <memory>
-    #include "PrettyPrinter.hpp"
-    NVisitor::IVisitor *prettyPrinter = new NVisitor::CPrettyPythonPrinter();
+    #include "GraphvizPrinter.hpp"
+    NVisitor::IVisitor *prettyPrinter = new NVisitor::CGraphvizPrinter();
     extern int yylex();
     void yyerror(char *s);
 %}
