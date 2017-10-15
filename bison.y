@@ -14,7 +14,7 @@
     #include <iostream>
     #include <memory>
     #include "PrettyPrinter.hpp"
-    NVisitor::IVisitor *prettyPrinter = new NVisitor::CPrettyPrinter();
+    NVisitor::IVisitor *prettyPrinter = new NVisitor::CPrettyPythonPrinter();
     extern int yylex();
     void yyerror(char *s);
 %}

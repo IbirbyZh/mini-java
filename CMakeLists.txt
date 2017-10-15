@@ -45,8 +45,8 @@ set(NodeSrc
 
 set(VisitorSrc
         visitors/IVisitor.hpp
-        visitors/PrettyPrinter.hpp
-        visitors/PrettyPrinter.cpp
+        visitors/PrettyPythonPrinter.hpp
+        visitors/PrettyPythonPrinter.cpp
         )
 
 

@@ -5,7 +5,7 @@
 namespace NNodes {
 
     class CIntegerExpression : public INode {
-        friend class NVisitor::CPrettyPrinter;
+        friend class NVisitor::CPrettyPythonPrinter;
 
     public:
         explicit CIntegerExpression(int number);

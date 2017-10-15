@@ -5,7 +5,7 @@
 namespace NNodes {
 
     class CGetThisId : public INode {
-        friend class NVisitor::CPrettyPrinter;
+        friend class NVisitor::CPrettyPythonPrinter;
 
     public:
         CGetThisId();

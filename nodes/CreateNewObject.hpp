@@ -6,7 +6,7 @@
 namespace NNodes {
 
     class CCreateNewObject : public INode {
-        friend class NVisitor::CPrettyPrinter;
+        friend class NVisitor::CPrettyPythonPrinter;
 
     public:
         explicit CCreateNewObject(const char * className);

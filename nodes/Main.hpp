@@ -8,7 +8,7 @@
 namespace NNodes {
 
     class CMain : public INode {
-        friend class NVisitor::CPrettyPrinter;
+        friend class NVisitor::CPrettyPythonPrinter;
 
     public:
         CMain(const char * className, const char * inputName,

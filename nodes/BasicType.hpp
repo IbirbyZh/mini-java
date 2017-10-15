@@ -6,7 +6,7 @@
 namespace NNodes {
 
     class CBasicType : public IType {
-        friend class NVisitor::CPrettyPrinter;
+        friend class NVisitor::CPrettyPythonPrinter;
 
     public:
         enum TType {

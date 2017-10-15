@@ -6,7 +6,7 @@
 namespace NNodes {
 
     class CCreateNewArray : public INode {
-        friend class NVisitor::CPrettyPrinter;
+        friend class NVisitor::CPrettyPythonPrinter;
 
     public:
         explicit CCreateNewArray(std::shared_ptr<INode> arraySize);

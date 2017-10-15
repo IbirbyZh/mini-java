@@ -8,7 +8,7 @@
 namespace NNodes {
 
     class CTypedId : public INode {
-        friend class NVisitor::CPrettyPrinter;
+        friend class NVisitor::CPrettyPythonPrinter;
 
     public:
         CTypedId(std::shared_ptr<IType> objectType, const char *objectName);

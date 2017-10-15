@@ -6,7 +6,7 @@
 namespace NNodes {
 
     class CWhileDo : public IStatement {
-        friend class NVisitor::CPrettyPrinter;
+        friend class NVisitor::CPrettyPythonPrinter;
 
     public:
         CWhileDo(std::shared_ptr<INode> whileWhat, std::shared_ptr<INode> doWhat);

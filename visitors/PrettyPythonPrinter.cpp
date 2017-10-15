@@ -1,25 +1,25 @@
-#include "PrettyPrinter.hpp"
+#include "PrettyPythonPrinter.hpp"
 
 #include <iostream>
 #include <string>
 
-void NVisitor::CPrettyPrinter::printIndent() const {
+void NVisitor::CPrettyPythonPrinter::printIndent() const {
     std::cout << std::string(indent, ' ');
 }
 
-void NVisitor::CPrettyPrinter::increaseIndent() {
+void NVisitor::CPrettyPythonPrinter::increaseIndent() {
     indent += 4;
 }
 
-void NVisitor::CPrettyPrinter::dicreaseIndent() {
+void NVisitor::CPrettyPythonPrinter::dicreaseIndent() {
     indent -= 4;
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CIdExpression *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CIdExpression *const node) {
     std::cout << node->id;
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CBasicType *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CBasicType *const node) {
     switch (node->type) {
         case NNodes::CBasicType::BT_BOOL:
             std::cout << "bool";
@@ -33,15 +33,15 @@ void NVisitor::CPrettyPrinter::Visit(const NNodes::CBasicType *const node) {
     }
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CClassType *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CClassType *const node) {
     std::cout << node->name;
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CIntegerExpression *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CIntegerExpression *const node) {
     std::cout << node->value;
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CIntegerArithmeticOperation *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CIntegerArithmeticOperation *const node) {
     std::cout << '(';
     node->left->Visit(this);
     switch (node->type) {
@@ -62,7 +62,7 @@ void NVisitor::CPrettyPrinter::Visit(const NNodes::CIntegerArithmeticOperation *
     std::cout << ')';
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CBooleanExpression *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CBooleanExpression *const node) {
     if (node->value) {
         std::cout << "True";
     } else {
@@ -70,7 +70,7 @@ void NVisitor::CPrettyPrinter::Visit(const NNodes::CBooleanExpression *const nod
     }
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CBooleanArithmeticOperation *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CBooleanArithmeticOperation *const node) {
     std::cout << '(';
     if (node->type != NNodes::CBooleanArithmeticOperation::T_BANG) {
         node->left->Visit(this);
@@ -93,14 +93,14 @@ void NVisitor::CPrettyPrinter::Visit(const NNodes::CBooleanArithmeticOperation *
     std::cout << ')';
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CGetItemAtPosition *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CGetItemAtPosition *const node) {
     node->object->Visit(this);
     std::cout << '[';
     node->position->Visit(this);
     std::cout << ']';
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CCallMethod *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CCallMethod *const node) {
     node->object->Visit(this);
     std::cout << '.' << node->name << '(';
     if (node->parameters) {
@@ -109,26 +109,26 @@ void NVisitor::CPrettyPrinter::Visit(const NNodes::CCallMethod *const node) {
     std::cout << ')';
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CGetLength *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CGetLength *const node) {
     node->object->Visit(this);
     std::cout << ".length";
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CCreateNewObject *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CCreateNewObject *const node) {
     std::cout << "new " << node->name << "()";
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CCreateNewArray *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CCreateNewArray *const node) {
     std::cout << "new int[";
     node->size->Visit(this);
     std::cout<< ']';
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CGetThisId *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CGetThisId *const node) {
     std::cout << "this";
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CCallMethodParameters *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CCallMethodParameters *const node) {
     if (node->firstParameter) {
         node->firstParameter->Visit(this);
     }
@@ -139,13 +139,13 @@ void NVisitor::CPrettyPrinter::Visit(const NNodes::CCallMethodParameters *const 
 
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CAssignment *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CAssignment *const node) {
     printIndent();
     std::cout << node->lValue << " = ";
     node->rValue->Visit(this);
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CAssignmentAtPosition *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CAssignmentAtPosition *const node) {
     printIndent();
     std::cout << node->lValue << '[';
     node->position->Visit(this);
@@ -153,7 +153,7 @@ void NVisitor::CPrettyPrinter::Visit(const NNodes::CAssignmentAtPosition *const 
     node->rValue->Visit(this);
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CPrintThing *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CPrintThing *const node) {
     printIndent();
     std::cout << "print ";
     if (node->object) {
@@ -161,7 +161,7 @@ void NVisitor::CPrettyPrinter::Visit(const NNodes::CPrintThing *const node) {
     }
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CWhileDo *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CWhileDo *const node) {
     printIndent();
     std::cout << "while ";
     node->condition->Visit(this);
@@ -171,7 +171,7 @@ void NVisitor::CPrettyPrinter::Visit(const NNodes::CWhileDo *const node) {
     dicreaseIndent();
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CIfDoElseDo *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CIfDoElseDo *const node) {
     printIndent();
     std::cout << "if ";
     node->condition->Visit(this);
@@ -187,7 +187,7 @@ void NVisitor::CPrettyPrinter::Visit(const NNodes::CIfDoElseDo *const node) {
     dicreaseIndent();
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CStatementSequence *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CStatementSequence *const node) {
     if (node->firstStatements) {
         node->firstStatements->Visit(this);
     }
@@ -197,12 +197,12 @@ void NVisitor::CPrettyPrinter::Visit(const NNodes::CStatementSequence *const nod
     }
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CTypedId *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CTypedId *const node) {
     node->type->Visit(this);
     std::cout << ' ' << node->name;
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CTypedIdSequence *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CTypedIdSequence *const node) {
     if (node->firstTypedIds) {
         node->firstTypedIds->Visit(this);
         std::cout << ", ";
@@ -212,7 +212,7 @@ void NVisitor::CPrettyPrinter::Visit(const NNodes::CTypedIdSequence *const node)
     }
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CMethodSignature *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CMethodSignature *const node) {
     if (node->isPrivate) {
         std::cout << "private ";
     } else {
@@ -226,7 +226,7 @@ void NVisitor::CPrettyPrinter::Visit(const NNodes::CMethodSignature *const node)
     std::cout << ')';
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CMethod *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CMethod *const node) {
     printIndent();
     node->signature->Visit(this);
     std::cout << ':' << std::endl;
@@ -246,7 +246,7 @@ void NVisitor::CPrettyPrinter::Visit(const NNodes::CMethod *const node) {
     dicreaseIndent();
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CMethodSequence *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CMethodSequence *const node) {
     if (node->firstMethods) {
         node->firstMethods->Visit(this);
         std::cout << std::endl;
@@ -256,7 +256,7 @@ void NVisitor::CPrettyPrinter::Visit(const NNodes::CMethodSequence *const node) 
     }
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CClass *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CClass *const node) {
     printIndent();
     std::cout << "class " << node->name << '(' << node->extendsName << "):" << std::endl;
     increaseIndent();
@@ -272,7 +272,7 @@ void NVisitor::CPrettyPrinter::Visit(const NNodes::CClass *const node) {
     dicreaseIndent();
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CClassSequence *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CClassSequence *const node) {
     if (node->firstClasses) {
         node->firstClasses->Visit(this);
         std::cout << std::endl << std::endl;
@@ -282,7 +282,7 @@ void NVisitor::CPrettyPrinter::Visit(const NNodes::CClassSequence *const node) {
     }
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CMain *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CMain *const node) {
     printIndent();
     std::cout << "class " << node->name << "():" << std::endl;
     increaseIndent();
@@ -294,7 +294,7 @@ void NVisitor::CPrettyPrinter::Visit(const NNodes::CMain *const node) {
     dicreaseIndent();
 }
 
-void NVisitor::CPrettyPrinter::Visit(const NNodes::CProgram *const node) {
+void NVisitor::CPrettyPythonPrinter::Visit(const NNodes::CProgram *const node) {
     node->main->Visit(this);
     if (node->classes) {
         std::cout << std::endl << std::endl;

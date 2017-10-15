@@ -3,7 +3,7 @@
 
 namespace NVisitor {
     class IVisitor;
-    class CPrettyPrinter;
+    class CPrettyPythonPrinter;
 }
 
 namespace NNodes {

@@ -3,7 +3,7 @@
 #include "IVisitor.hpp"
 
 namespace NVisitor {
-    class CPrettyPrinter : public IVisitor {
+    class CPrettyPythonPrinter : public IVisitor {
     public:
         void Visit(const NNodes::CIdExpression *node) override;
         void Visit(const NNodes::CBasicType *const node) override;

@@ -6,7 +6,7 @@
 namespace NNodes {
 
     class CIdExpression : public INode {
-        friend class NVisitor::CPrettyPrinter;
+        friend class NVisitor::CPrettyPythonPrinter;
 
     public:
         explicit CIdExpression(const char *name);

@@ -7,7 +7,7 @@
 namespace NNodes {
 
     class CAssignmentAtPosition : public IStatement {
-        friend class NVisitor::CPrettyPrinter;
+        friend class NVisitor::CPrettyPythonPrinter;
 
     public:
         CAssignmentAtPosition(const char * id, std::shared_ptr<INode> atPosition,

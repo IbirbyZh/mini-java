@@ -9,7 +9,7 @@
 namespace NNodes {
 
     class CMethodSignature : public INode {
-        friend class NVisitor::CPrettyPrinter;
+        friend class NVisitor::CPrettyPythonPrinter;
 
     public:
         CMethodSignature(bool isPrivate_, std::shared_ptr<IType> returnType,

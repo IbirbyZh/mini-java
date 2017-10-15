@@ -6,7 +6,7 @@
 namespace NNodes {
 
     class CGetLength : public INode {
-        friend class NVisitor::CPrettyPrinter;
+        friend class NVisitor::CPrettyPythonPrinter;
 
     public:
         explicit CGetLength(std::shared_ptr<INode> fromObject);

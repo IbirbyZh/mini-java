@@ -6,7 +6,7 @@
 namespace NNodes {
 
     class CIfDoElseDo : public IStatement {
-        friend class NVisitor::CPrettyPrinter;
+        friend class NVisitor::CPrettyPythonPrinter;
 
     public:
         CIfDoElseDo(std::shared_ptr<INode> ifCondition, std::shared_ptr<INode> doWhat,

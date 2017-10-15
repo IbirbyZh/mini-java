@@ -6,7 +6,7 @@
 namespace NNodes {
 
     class CIntegerArithmeticOperation : public INode {
-        friend class NVisitor::CPrettyPrinter;
+        friend class NVisitor::CPrettyPythonPrinter;
 
     public:
         enum TOperation {

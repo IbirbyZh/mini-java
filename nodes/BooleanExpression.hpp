@@ -5,7 +5,7 @@
 namespace NNodes {
 
     class CBooleanExpression : public INode {
-        friend class NVisitor::CPrettyPrinter;
+        friend class NVisitor::CPrettyPythonPrinter;
 
     public:
         explicit CBooleanExpression(bool isTrue);

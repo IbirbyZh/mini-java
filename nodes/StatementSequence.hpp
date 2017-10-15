@@ -6,7 +6,7 @@
 namespace NNodes {
 
     class CStatementSequence : public INode {
-        friend class NVisitor::CPrettyPrinter;
+        friend class NVisitor::CPrettyPythonPrinter;
 
     public:
         CStatementSequence(std::shared_ptr<CStatementSequence> statements,
