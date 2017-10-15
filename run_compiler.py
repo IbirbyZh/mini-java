@@ -28,5 +28,7 @@ if __name__ == '__main__':
         print 'Build Failed'
         raise
 
-    with open(args.input) as input_stream:
-        subprocess.call([args.executable], stdin=input_stream)
+    with open(args.input) as input_stream, open('output.txt', 'w') as output_stream:
+        subprocess.call([args.executable], stdin=input_stream, stdout=output_stream)
+    with open(os.devnull, "w") as nothing:
+        subprocess.call(['dot', '-Tpng', '-O', 'output.txt'], stdout=nothing, stderr=nothing)

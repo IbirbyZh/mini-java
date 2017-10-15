@@ -4,6 +4,8 @@
 
 # compiled files
 src
+output.txt
+.png
 
 # cmake
 cmake-build-debug
