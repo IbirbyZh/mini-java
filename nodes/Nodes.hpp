@@ -33,3 +33,9 @@
 #include "MethodSignature.hpp"
 #include "Method.hpp"
 #include "MethodSequence.hpp"
+
+#include "Class.hpp"
+#include "ClassSequence.hpp"
+
+#include "Main.hpp"
+#include "Program.hpp"

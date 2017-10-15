@@ -86,27 +86,30 @@
 
 %%
 goal
-  : class_main T_END                                                            {printf("only main\n");}
-  | class_main seq_class T_END                                                  {printf("not only main\n");}
+  : class_main T_END                                                {/*Program*/}
+  | class_main seq_class T_END                                      {/*Program*/}
 ;
 
 
 main_signature
-  : T_PUBLIC T_MAIN T_L_PAREN T_STRING T_L_SQUARE T_R_SQUARE T_ID T_R_PAREN
+  : T_PUBLIC T_MAIN T_L_PAREN
+        T_STRING T_L_SQUARE T_R_SQUARE T_ID
+    T_R_PAREN                                                       {/*wrapper*/}
 ;
 
 
 class_main 
   : T_CLASS T_ID T_L_BRACE
-         main_signature T_L_BRACE
+        main_signature T_L_BRACE
             seq_statement
         T_R_BRACE
-    T_R_BRACE
+    T_R_BRACE                                                       {/*Main*/}
 
   | T_CLASS T_ID T_L_BRACE
         main_signature T_L_BRACE
-            T_R_BRACE
+
         T_R_BRACE
+    T_R_BRACE                                                       {/*Main*/}
 ;
 
 
@@ -114,40 +117,40 @@ class
   : T_CLASS T_ID T_L_BRACE
         seq_var
         seq_method
-    T_R_BRACE
+    T_R_BRACE                                                       {/*Class*/}
 
   | T_CLASS T_ID T_L_BRACE
         seq_method
-    T_R_BRACE
+    T_R_BRACE                                                       {/*Class*/}
 
   | T_CLASS T_ID T_L_BRACE
         seq_var
-    T_R_BRACE
+    T_R_BRACE                                                       {/*Class*/}
 
   | T_CLASS T_ID T_L_BRACE
-    T_R_BRACE
+    T_R_BRACE                                                       {/*Class*/}
 
   | T_CLASS T_ID T_L_BRACE T_EXTENDS T_ID
         seq_var
         seq_method
-    T_R_BRACE
+    T_R_BRACE                                                       {/*Class*/}
 
   | T_CLASS T_ID T_L_BRACE T_EXTENDS T_ID
         seq_method
-    T_R_BRACE
+    T_R_BRACE                                                       {/*Class*/}
 
   | T_CLASS T_ID T_L_BRACE T_EXTENDS T_ID
         seq_var
-    T_R_BRACE
+    T_R_BRACE                                                       {/*Class*/}
 
   | T_CLASS T_ID T_L_BRACE T_EXTENDS T_ID
-    T_R_BRACE
+    T_R_BRACE                                                       {/*Class*/}
 ;
 
 
 seq_class
-  : class
-  | seq_class class
+  : class                                                           {/*ClassSequence*/}
+  | seq_class class                                                 {/*ClassSequence*/}
 ;
 
 

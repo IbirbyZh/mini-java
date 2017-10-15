@@ -56,6 +56,16 @@ namespace NNodes {
     class CMethod;
 
     class CMethodSequence;
+
+
+    class CClass;
+
+    class CClassSequence;
+
+
+    class CMain;
+
+    class CProgram;
 }
 
 #include "Nodes.hpp"
@@ -94,6 +104,12 @@ namespace NVisitor {
         virtual void Visit(const NNodes::CMethodSignature *const node) = 0;
         virtual void Visit(const NNodes::CMethod *const node) = 0;
         virtual void Visit(const NNodes::CMethodSequence *const node) = 0;
+
+        virtual void Visit(const NNodes::CClass *const node) = 0;
+        virtual void Visit(const NNodes::CClassSequence *const node) = 0;
+
+        virtual void Visit(const NNodes::CMain *const node) = 0;
+        virtual void Visit(const NNodes::CProgram *const node) = 0;
 
     };
 }

@@ -38,7 +38,9 @@ set(NodeSrc
         nodes/MethodSignature.cpp nodes/MethodSignature.hpp
         nodes/Method.cpp nodes/Method.hpp
         nodes/MethodSequence.cpp nodes/MethodSequence.hpp
-        )
+
+        nodes/Class.cpp nodes/Class.hpp
+        nodes/ClassSequence.cpp nodes/ClassSequence.hpp nodes/Main.cpp nodes/Main.hpp nodes/Program.cpp nodes/Program.hpp)
 
 
 set(VisitorSrc
