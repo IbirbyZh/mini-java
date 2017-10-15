@@ -3,6 +3,7 @@
 
 namespace NVisitor {
     class IVisitor;
+    class CPrettyPrinter;
 }
 
 namespace NNodes {

@@ -7,6 +7,8 @@
 namespace NNodes {
 
     class CTypedIdSequence : public INode {
+        friend class NVisitor::CPrettyPrinter;
+
     public:
         CTypedIdSequence(std::shared_ptr<CTypedIdSequence> typedIds,
                         std::shared_ptr<INode> typedId);

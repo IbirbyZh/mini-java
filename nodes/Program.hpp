@@ -8,6 +8,8 @@
 namespace NNodes {
 
     class CProgram : public INode {
+        friend class NVisitor::CPrettyPrinter;
+
     public:
         CProgram(std::shared_ptr<CMain> mainClass,
                   std::shared_ptr<CClassSequence> additionalClasses);

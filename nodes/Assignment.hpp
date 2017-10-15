@@ -7,6 +7,8 @@
 namespace NNodes {
 
     class CAssignment : public IStatement {
+        friend class NVisitor::CPrettyPrinter;
+
     public:
         CAssignment(const char *id, std::shared_ptr<INode> toObject);
         void Visit(NVisitor::IVisitor *visitor) const override;

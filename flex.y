@@ -11,7 +11,6 @@
 
     int lineNumber = 1;
     int columnNumber = 1;
-
     void print_position() {
         printf("%d %d ", lineNumber, columnNumber - yyleng);
     }

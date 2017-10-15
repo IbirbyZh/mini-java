@@ -8,6 +8,8 @@
 namespace NNodes {
 
     class CCallMethod : public INode {
+        friend class NVisitor::CPrettyPrinter;
+
     public:
         CCallMethod(const std::shared_ptr<INode> fromObject, const char *methodName,
                     const std::shared_ptr<CCallMethodParameters> methodParameters);

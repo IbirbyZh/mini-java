@@ -6,6 +6,8 @@
 namespace NNodes {
 
     class CCallMethodParameters : public INode {
+        friend class NVisitor::CPrettyPrinter;
+
     public:
         CCallMethodParameters(std::shared_ptr<INode> callParameter,
                               std::shared_ptr<CCallMethodParameters> nextParameters);

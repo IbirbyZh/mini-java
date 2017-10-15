@@ -6,6 +6,8 @@
 namespace NNodes {
 
     class CBooleanArithmeticOperation : public INode {
+        friend class NVisitor::CPrettyPrinter;
+
     public:
         enum TOperation {
             T_AND,

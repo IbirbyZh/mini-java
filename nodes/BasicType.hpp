@@ -6,6 +6,8 @@
 namespace NNodes {
 
     class CBasicType : public IType {
+        friend class NVisitor::CPrettyPrinter;
+
     public:
         enum TType {
             BT_INT,

@@ -6,6 +6,8 @@
 namespace NNodes {
 
     class CCreateNewArray : public INode {
+        friend class NVisitor::CPrettyPrinter;
+
     public:
         explicit CCreateNewArray(std::shared_ptr<INode> arraySize);
         void Visit(NVisitor::IVisitor *visitor) const override;

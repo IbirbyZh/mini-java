@@ -6,6 +6,8 @@
 namespace NNodes {
 
     class CIntegerArithmeticOperation : public INode {
+        friend class NVisitor::CPrettyPrinter;
+
     public:
         enum TOperation {
             T_PLUS,

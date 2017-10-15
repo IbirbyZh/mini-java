@@ -6,6 +6,8 @@
 namespace NNodes {
 
     class CGetLength : public INode {
+        friend class NVisitor::CPrettyPrinter;
+
     public:
         explicit CGetLength(std::shared_ptr<INode> fromObject);
         void Visit(NVisitor::IVisitor *visitor) const override;

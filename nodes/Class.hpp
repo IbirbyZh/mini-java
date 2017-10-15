@@ -9,6 +9,8 @@
 namespace NNodes {
 
     class CClass : public INode {
+        friend class NVisitor::CPrettyPrinter;
+
     public:
         CClass(const char *className, std::shared_ptr<CTypedIdSequence> classVariables,
                std::shared_ptr<CMethodSequence> classMethods, const char *extendsClassName);

@@ -1,8 +1,10 @@
 %code requires {
     #include "Nodes.hpp"
     #include <memory>
+    #include <string>
 
     using namespace NNodes;
+
 }
 
 %{
@@ -11,7 +13,8 @@
     using namespace NNodes;
     #include <iostream>
     #include <memory>
-
+    #include "PrettyPrinter.hpp"
+    NVisitor::IVisitor *prettyPrinter = new NVisitor::CPrettyPrinter();
     extern int yylex();
     void yyerror(char *s);
 %}
@@ -72,6 +75,8 @@
 %union {
     long intValue;
     char *strValue;
+    char *stringValue;
+    int integerValue;
     CProgram *program;
     CMain *mainClass;
     CClass *additionalClass;
@@ -88,8 +93,8 @@
     CCallMethodParameters *callMethodParameters;
 };
 
-%type<intValue> T_INTEGER_NUMBER
-%type<strValue> main_signature T_ID
+%type<integerValue> integer_number
+%type<stringValue> main_signature id
 %type<program> goal
 %type<mainClass> class_main
 %type<additionalClass> class
@@ -123,64 +128,64 @@
 
 %%
 goal
-  : class_main T_END                                                {$$ = new CProgram(std::shared_ptr<CMain>($1), nullptr);}
-  | class_main seq_class T_END                                      {$$ = new CProgram(std::shared_ptr<CMain>($1), std::shared_ptr<CClassSequence>($2));}
+  : class_main T_END                                                {$$ = new CProgram(std::shared_ptr<CMain>($1), nullptr); $$->Visit(prettyPrinter);}
+  | class_main seq_class T_END                                      {$$ = new CProgram(std::shared_ptr<CMain>($1), std::shared_ptr<CClassSequence>($2)); $$->Visit(prettyPrinter);}
 ;
 
 
 main_signature
   : T_PUBLIC T_MAIN T_L_PAREN
-        T_STRING T_L_SQUARE T_R_SQUARE T_ID
+        T_STRING T_L_SQUARE T_R_SQUARE id
     T_R_PAREN                                                       {$$ = $7;}
 ;
 
 
 class_main 
-  : T_CLASS T_ID T_L_BRACE
+  : T_CLASS id T_L_BRACE
         main_signature T_L_BRACE
             seq_statement
         T_R_BRACE
-    T_R_BRACE                                                       {$$ = new CMain($2, $4, std::shared_ptr<CStatementSequence>($6));}
+    T_R_BRACE                                                       {$$ = new CMain($2, $4, std::shared_ptr<CStatementSequence>($6)); delete $4;}
 
-  | T_CLASS T_ID T_L_BRACE
+  | T_CLASS id T_L_BRACE
         main_signature T_L_BRACE
 
         T_R_BRACE
-    T_R_BRACE                                                       {$$ = new CMain($2, $4, nullptr);}
+    T_R_BRACE                                                       {$$ = new CMain($2, $4, nullptr); delete $4;}
 ;
 
 
 class
-  : T_CLASS T_ID T_L_BRACE
+  : T_CLASS id T_L_BRACE
         seq_var
         seq_method
     T_R_BRACE                                                       {$$ = new CClass($2, std::shared_ptr<CTypedIdSequence>($4), std::shared_ptr<CMethodSequence>($5));}
 
-  | T_CLASS T_ID T_L_BRACE
+  | T_CLASS id T_L_BRACE
         seq_method
     T_R_BRACE                                                       {$$ = new CClass($2, nullptr, std::shared_ptr<CMethodSequence>($4));}
 
-  | T_CLASS T_ID T_L_BRACE
+  | T_CLASS id T_L_BRACE
         seq_var
     T_R_BRACE                                                       {$$ = new CClass($2, std::shared_ptr<CTypedIdSequence>($4), nullptr);}
 
-  | T_CLASS T_ID T_L_BRACE
+  | T_CLASS id T_L_BRACE
     T_R_BRACE                                                       {$$ = new CClass($2, nullptr, nullptr);}
 
-  | T_CLASS T_ID T_L_BRACE T_EXTENDS T_ID
+  | T_CLASS id T_L_BRACE T_EXTENDS id
         seq_var
         seq_method
     T_R_BRACE                                                       {$$ = new CClass($2, std::shared_ptr<CTypedIdSequence>($6), std::shared_ptr<CMethodSequence>($7), $5);}
 
-  | T_CLASS T_ID T_L_BRACE T_EXTENDS T_ID
+  | T_CLASS id T_L_BRACE T_EXTENDS id
         seq_method
     T_R_BRACE                                                       {$$ = new CClass($2, nullptr, std::shared_ptr<CMethodSequence>($6), $5);}
 
-  | T_CLASS T_ID T_L_BRACE T_EXTENDS T_ID
+  | T_CLASS id T_L_BRACE T_EXTENDS id
         seq_var
     T_R_BRACE                                                       {$$ = new CClass($2, std::shared_ptr<CTypedIdSequence>($6), nullptr, $5);}
 
-  | T_CLASS T_ID T_L_BRACE T_EXTENDS T_ID
+  | T_CLASS id T_L_BRACE T_EXTENDS id
     T_R_BRACE                                                       {$$ = new CClass($2, nullptr, nullptr, $5);}
 ;
 
@@ -195,12 +200,12 @@ type
   : T_INT T_L_SQUARE T_R_SQUARE                                     {$$ = new CBasicType(CBasicType::BT_INT_ARRAY);}
   | T_BOOLEAN                                                       {$$ = new CBasicType(CBasicType::BT_BOOL);}
   | T_INT                                                           {$$ = new CBasicType(CBasicType::BT_INT);}
-  | T_ID                                                            {$$ = new CClassType($1);}
+  | id                                                              {$$ = new CClassType($1);}
 ;
 
 
 var
-  : type T_ID T_SEMI                                                {$$ = new CTypedId(std::shared_ptr<IType>($1), $2);}
+  : type id T_SEMI                                                  {$$ = new CTypedId(std::shared_ptr<IType>($1), $2);}
 ;
 
 
@@ -211,7 +216,7 @@ seq_var
 
 
 argument
-  : type T_ID                                                       {$$ = new CTypedId(std::shared_ptr<IType>($1), $2);}
+  : type id                                                         {$$ = new CTypedId(std::shared_ptr<IType>($1), $2);}
 ;
 
 
@@ -223,8 +228,8 @@ method_params
 
 
 method_signature
-  : T_PUBLIC type T_ID T_L_PAREN method_params T_R_PAREN            {$$ = new CMethodSignature(false, std::shared_ptr<IType>($2), $3, std::shared_ptr<CTypedIdSequence>($5));}
-  | T_PRIVATE type T_ID T_L_PAREN method_params T_R_PAREN           {$$ = new CMethodSignature(true, std::shared_ptr<IType>($2), $3, std::shared_ptr<CTypedIdSequence>($5));}
+  : T_PUBLIC type id T_L_PAREN method_params T_R_PAREN              {$$ = new CMethodSignature(false, std::shared_ptr<IType>($2), $3, std::shared_ptr<CTypedIdSequence>($5));}
+  | T_PRIVATE type id T_L_PAREN method_params T_R_PAREN             {$$ = new CMethodSignature(true, std::shared_ptr<IType>($2), $3, std::shared_ptr<CTypedIdSequence>($5));}
 
 
 method
@@ -259,8 +264,8 @@ statement
   | T_IF T_L_PAREN exp T_R_PAREN statement T_ELSE statement         {$$ = new CIfDoElseDo(std::shared_ptr<INode>($3), std::shared_ptr<IStatement>($5), std::shared_ptr<IStatement>($7));}
   | T_WHILE T_L_PAREN exp T_R_PAREN statement                       {$$ = new CWhileDo(std::shared_ptr<INode>($3), std::shared_ptr<IStatement>($5));}
   | T_PRINT_LINE T_L_PAREN exp T_R_PAREN T_SEMI                     {$$ = new CPrintThing(std::shared_ptr<INode>($3));}
-  | T_ID T_ASSIGN exp T_SEMI                                        {$$ = new CAssignment($1, std::shared_ptr<INode>($3));}
-  | T_ID T_L_SQUARE exp T_R_SQUARE T_ASSIGN exp T_SEMI              {$$ = new CAssignmentAtPosition($1, std::shared_ptr<INode>($3), std::shared_ptr<INode>($6));}
+  | id T_ASSIGN exp T_SEMI                                          {$$ = new CAssignment($1, std::shared_ptr<INode>($3));}
+  | id T_L_SQUARE exp T_R_SQUARE T_ASSIGN exp T_SEMI                {$$ = new CAssignmentAtPosition($1, std::shared_ptr<INode>($3), std::shared_ptr<INode>($6));}
 ;
 
 
@@ -285,14 +290,14 @@ exp
   : operation                                                       {$$ = $1;}
   | exp T_L_SQUARE exp T_R_SQUARE                                   {$$ = new CGetItemAtPosition(std::shared_ptr<INode>($1), std::shared_ptr<INode>($3));}
   | exp T_DOT T_LENGTH                                              {$$ = new CGetLength(std::shared_ptr<INode>($1));}
-  | exp T_DOT T_ID T_L_PAREN run_method_params T_R_PAREN            {$$ = new CCallMethod(std::shared_ptr<INode>($1), $3, std::shared_ptr<CCallMethodParameters>($5));}
-  | T_INTEGER_NUMBER                                                {$$ = new CIntegerExpression($1);}
+  | exp T_DOT id T_L_PAREN run_method_params T_R_PAREN              {$$ = new CCallMethod(std::shared_ptr<INode>($1), $3, std::shared_ptr<CCallMethodParameters>($5));}
+  | integer_number                                                  {$$ = new CIntegerExpression($1);}
   | T_TRUE                                                          {$$ = new CBooleanExpression(true);}
   | T_FALSE                                                         {$$ = new CBooleanExpression(false);}
-  | T_ID                                                            {$$ = new CIdExpression($1);}
+  | id                                                              {$$ = new CIdExpression($1);}
   | T_THIS                                                          {$$ = new CGetThisId();}
   | T_NEW T_INT T_L_SQUARE exp T_R_SQUARE                           {$$ = new CCreateNewArray(std::shared_ptr<INode>($4));}
-  | T_NEW T_ID T_L_PAREN T_R_PAREN                                  {$$ = new CCreateNewObject($2);}
+  | T_NEW id T_L_PAREN T_R_PAREN                                    {$$ = new CCreateNewObject($2);}
   | T_BANG exp                                                      {$$ = new CBooleanArithmeticOperation(nullptr, CBooleanArithmeticOperation::T_BANG, std::shared_ptr<INode>($2));}
   | T_L_PAREN exp T_R_PAREN                                         {$$ = $2;}
 ;
@@ -304,7 +309,18 @@ run_method_params
   | exp T_COMMA run_method_params                                   {$$ = new CCallMethodParameters(std::shared_ptr<INode>($1), std::shared_ptr<CCallMethodParameters>($3));}
 ;
 
+
+id
+  : T_ID                                                            {$$ = new char[strlen(yylval.strValue)]; strcpy($$, yylval.strValue);}
+;
+
+
+integer_number
+  : T_INTEGER_NUMBER                                                {$$ = yylval.intValue;}
+;
 %%
+
+
 
 void yyerror(char* s) {
     printf("AGAIN %s at %d,%d:%d\n",

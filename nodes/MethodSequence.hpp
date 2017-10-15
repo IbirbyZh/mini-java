@@ -7,6 +7,8 @@
 namespace NNodes {
 
     class CMethodSequence : public INode {
+        friend class NVisitor::CPrettyPrinter;
+
     public:
         CMethodSequence(std::shared_ptr<CMethodSequence> methods,
                            std::shared_ptr<CMethod> method);

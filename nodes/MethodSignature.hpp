@@ -9,8 +9,11 @@
 namespace NNodes {
 
     class CMethodSignature : public INode {
+        friend class NVisitor::CPrettyPrinter;
+
     public:
-        CMethodSignature(bool isPrivate_, std::shared_ptr<IType> returnType, const char *methodName,
+        CMethodSignature(bool isPrivate_, std::shared_ptr<IType> returnType,
+                         const char * methodName,
                          std::shared_ptr<CTypedIdSequence> methodParameters);
         void Visit(NVisitor::IVisitor *visitor) const override;
     private:

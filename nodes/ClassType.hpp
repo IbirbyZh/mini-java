@@ -6,8 +6,10 @@
 namespace NNodes {
 
     class CClassType : public IType {
+        friend class NVisitor::CPrettyPrinter;
+
     public:
-        explicit CClassType(const char *className);
+        explicit CClassType(const char * className);
         void Visit(NVisitor::IVisitor *visitor) const override;
     private:
         const std::string name;
