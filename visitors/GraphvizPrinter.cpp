@@ -105,7 +105,7 @@ void NVisitor::CGraphvizPrinter::Visit(const NNodes::CGetItemAtPosition *const n
 
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CCallMethod *const node) {
     std::string stringNode = formatNode(node);
-    printNode(stringNode, "{CallMethod|{<object>Object|" + node->name + "|<parameters>Parameters}}");
+    printNode(stringNode, "{CallMethod " + node->name + "|{<object>Object|<parameters>Parameters}}");
 
     printEdge(formatNode(node, "object"), formatNode(node->object.get()));
     node->object->Visit(this);
@@ -245,10 +245,11 @@ void NVisitor::CGraphvizPrinter::Visit(const NNodes::CTypedIdSequence *const nod
 
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CMethodSignature *const node) {
     std::string stringNode = formatNode(node);
+
     if (node->isPrivate) {
-        printNode(stringNode, "{Private|{<type>Type|<parameters>Parameters}}");
+        printNode(stringNode, "{Private " + node->name + "|{<type>Type|<parameters>Parameters}}");
     } else {
-        printNode(stringNode, "{Public|{<type>Type|<parameters>Parameters}}");
+        printNode(stringNode, "{Public " + node->name + "|{<type>Type|<parameters>Parameters}}");
     }
     printEdge(formatNode(node, "type"), formatNode(node->type.get()));
     node->type->Visit(this);
@@ -260,7 +261,7 @@ void NVisitor::CGraphvizPrinter::Visit(const NNodes::CMethodSignature *const nod
 
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CMethod *const node) {
     std::string stringNode = formatNode(node);
-    printNode(stringNode, "{Class|{<signature>Signature|<variables>Variables|<actions>Actions|<result>Result}}");
+    printNode(stringNode, "{Method|{<signature>Signature|<variables>Variables|<actions>Actions|<result>Result}}");
 
     printEdge(formatNode(node, "signature"), formatNode(node->signature.get()));
     node->signature->Visit(this);

@@ -172,21 +172,21 @@ class
   | T_CLASS id T_L_BRACE
     T_R_BRACE                                                       {$$ = new CClass($2, nullptr, nullptr); delete[] $2;}
 
-  | T_CLASS id T_L_BRACE T_EXTENDS id
+  | T_CLASS id T_EXTENDS id T_L_BRACE
         seq_var
         seq_method
-    T_R_BRACE                                                       {$$ = new CClass($2, std::shared_ptr<CTypedIdSequence>($6), std::shared_ptr<CMethodSequence>($7), $5); delete[] $2; delete[] $5;}
+    T_R_BRACE                                                       {$$ = new CClass($2, std::shared_ptr<CTypedIdSequence>($6), std::shared_ptr<CMethodSequence>($7), $4); delete[] $2; delete[] $4;}
 
-  | T_CLASS id T_L_BRACE T_EXTENDS id
+  | T_CLASS id T_EXTENDS id T_L_BRACE
         seq_method
-    T_R_BRACE                                                       {$$ = new CClass($2, nullptr, std::shared_ptr<CMethodSequence>($6), $5); delete[] $2; delete[] $5;}
+    T_R_BRACE                                                       {$$ = new CClass($2, nullptr, std::shared_ptr<CMethodSequence>($6), $4); delete[] $2; delete[] $4;}
 
-  | T_CLASS id T_L_BRACE T_EXTENDS id
+  | T_CLASS id T_EXTENDS id T_L_BRACE
         seq_var
-    T_R_BRACE                                                       {$$ = new CClass($2, std::shared_ptr<CTypedIdSequence>($6), nullptr, $5); delete[] $2; delete[] $5;}
+    T_R_BRACE                                                       {$$ = new CClass($2, std::shared_ptr<CTypedIdSequence>($6), nullptr, $4); delete[] $2; delete[] $4;}
 
-  | T_CLASS id T_L_BRACE T_EXTENDS id
-    T_R_BRACE                                                       {$$ = new CClass($2, nullptr, nullptr, $5); delete[] $2; delete[] $5;}
+  | T_CLASS id T_EXTENDS id T_L_BRACE
+    T_R_BRACE                                                       {$$ = new CClass($2, nullptr, nullptr, $4); delete[] $2; delete[] $4;}
 ;
 
 
