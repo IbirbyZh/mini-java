@@ -7,11 +7,7 @@ NNodes::CCallMethodParameters::CCallMethodParameters(
 
 }
 
-void NNodes::CCallMethodParameters::Visit(NVisitor::IVisitor *visitor) const {
-    visitor->Visit(this);
-}
-
-void NNodes::CCallMethodParameters::ToVector(std::vector<std::shared_ptr<NNodes::INode>> &parameters) const {
+void NNodes::CCallMethodParameters::ToVector(std::vector<std::shared_ptr<const NNodes::INode>> &parameters) const {
     parameters.push_back(firstParameter);
     if (additionalParameters) {
         additionalParameters->ToVector(parameters);

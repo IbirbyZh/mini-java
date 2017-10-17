@@ -5,6 +5,7 @@
 #include "TypedIdSequence.hpp"
 #include "StatementSequence.hpp"
 #include <memory>
+#include <vector>
 
 namespace NNodes {
 
@@ -14,16 +15,18 @@ namespace NNodes {
         friend class NVisitor::CGraphvizPrinter;
 
     public:
-        CMethod(std::shared_ptr<CMethodSignature> methodSignature,
-                std::shared_ptr<CTypedIdSequence> methodVariables,
-                std::shared_ptr<CStatementSequence> methodActions,
-                std::shared_ptr<INode> methodResult);
+        CMethod(
+                const std::shared_ptr<CMethodSignature> methodSignature,
+                const std::shared_ptr<CTypedIdSequence> methodVariables,
+                const std::shared_ptr<CStatementSequence> methodActions,
+                const std::shared_ptr<INode> methodResult
+        );
         void Visit(NVisitor::IVisitor *visitor) const override;
 
     private:
         const std::shared_ptr<CMethodSignature> signature;
-        const std::shared_ptr<CTypedIdSequence> variables;
-        const std::shared_ptr<CStatementSequence> actions;
+        std::vector<std::shared_ptr<const CTypedId>> variables;
+        std::vector<std::shared_ptr<const IStatement>> actions;
         const std::shared_ptr<INode> result;
     };
 }

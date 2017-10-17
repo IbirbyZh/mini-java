@@ -13,12 +13,14 @@ namespace NNodes {
         friend class NVisitor::CGraphvizPrinter;
 
     public:
-        CProgram(std::shared_ptr<CMain> mainClass,
-                 std::shared_ptr<CClassSequence> additionalClasses);
+        CProgram(
+                const std::shared_ptr<CMain> mainClass,
+                const std::shared_ptr<CClassSequence> additionalClasses
+        );
 
         void Visit(NVisitor::IVisitor *visitor) const override;
     private:
         const std::shared_ptr<CMain> main;
-        const std::shared_ptr<CClassSequence> classes;
+        std::vector<std::shared_ptr<const CClass>> classes;
     };
 }

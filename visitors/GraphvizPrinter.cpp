@@ -1,12 +1,11 @@
 #include "GraphvizPrinter.hpp"
 
 #include <iostream>
-#include <string>
 #include <sstream>
 
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CIdExpression *const node) {
     std::string stringNode = formatNode(node);
-    printNode(stringNode, "{Id|" + node->id + "}");
+    printNode(stringNode, "Id: " + node->id);
 }
 
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CBasicType *const node) {
@@ -14,20 +13,20 @@ void NVisitor::CGraphvizPrinter::Visit(const NNodes::CBasicType *const node) {
 
     switch (node->type) {
         case NNodes::CBasicType::BT_BOOL:
-            printNode(stringNode, "{Type|bool}");
+            printNode(stringNode, "bool");
             break;
         case NNodes::CBasicType::BT_INT:
-            printNode(stringNode, "{Type|int}");
+            printNode(stringNode, "int");
             break;
         case NNodes::CBasicType::BT_INT_ARRAY:
-            printNode(stringNode, "{Type|int[]}");
+            printNode(stringNode, "int[]");
             break;
     }
 }
 
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CClassType *const node) {
     std::string stringNode = formatNode(node);
-    printNode(stringNode, "{Type|" + node->name + '}');
+    printNode(stringNode, "class" + node->name);
 }
 
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CIntegerExpression *const node) {
@@ -109,10 +108,8 @@ void NVisitor::CGraphvizPrinter::Visit(const NNodes::CCallMethod *const node) {
 
     printEdge(formatNode(node, "object"), formatNode(node->object.get()));
     node->object->Visit(this);
-    if (node->parameters) {
-        printEdge(formatNode(node, "parameters"), formatNode(node->parameters.get()));
-        node->parameters->Visit(this);
-    }
+
+    printNodes(node->parameters, formatNode(node, "parameters"), "ololo", "cyan");
 }
 
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CGetLength *const node) {
@@ -142,23 +139,9 @@ void NVisitor::CGraphvizPrinter::Visit(const NNodes::CGetThisId *const node) {
     printNode(stringNode, "This");
 }
 
-void NVisitor::CGraphvizPrinter::Visit(const NNodes::CCallMethodParameters *const node) {
-    std::string stringNode = formatNode(node);
-    printNode(stringNode, "CallMethodParameters");
-    if (node->firstParameter) {
-        printEdge(stringNode, formatNode(node->firstParameter.get()));
-        node->firstParameter->Visit(this);
-    }
-    if (node->additionalParameters) {
-        printEdge(stringNode, formatNode(node->additionalParameters.get()));
-        node->additionalParameters->Visit(this);
-    }
-
-}
-
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CAssignment *const node) {
     std::string stringNode = formatNode(node);
-    printNode(stringNode, "{" + node->lValue + " =|{<rValue>RValue}}");
+    printNode(stringNode, "<statement>ST|{" + node->lValue + " =|<rValue>RValue}");
 
     printEdge(formatNode(node, "rValue"), formatNode(node->rValue.get()));
     node->rValue->Visit(this);
@@ -166,7 +149,7 @@ void NVisitor::CGraphvizPrinter::Visit(const NNodes::CAssignment *const node) {
 
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CAssignmentAtPosition *const node) {
     std::string stringNode = formatNode(node);
-    printNode(stringNode, "{" + node->lValue + " =|{<position>Position|<rValue>RValue}}");
+    printNode(stringNode, "<statement>ST|{" + node->lValue + " =|{<position>Position|<rValue>RValue}}");
 
     printEdge(formatNode(node, "position"), formatNode(node->position.get()));
     node->position->Visit(this);
@@ -177,70 +160,42 @@ void NVisitor::CGraphvizPrinter::Visit(const NNodes::CAssignmentAtPosition *cons
 
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CPrintThing *const node) {
     std::string stringNode = formatNode(node);
-    printNode(stringNode, "Print");
+    printNode(stringNode, "<statement>ST|<print>Print");
     if (node->object) {
-        printEdge(stringNode, formatNode(node->object.get()));
+        printEdge(formatNode(node, "print"), formatNode(node->object.get()));
         node->object->Visit(this);
     }
 }
 
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CWhileDo *const node) {
     std::string stringNode = formatNode(node);
-    printNode(stringNode, "{While|{<condition>Condition|<action>Action|}}");
+    printNode(stringNode, "<statement>ST|{While|{<condition>Condition|<action>Action}}");
 
     printEdge(formatNode(node, "condition"), formatNode(node->condition.get()));
     node->condition->Visit(this);
 
-    printEdge(formatNode(node, "action"), formatNode(node->action.get()));
-    node->action->Visit(this);
+    printStatements(node->actions, formatNode(node, "action"));
 
 }
 
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CIfDoElseDo *const node) {
     std::string stringNode = formatNode(node);
-    printNode(stringNode, "{If|{<condition>Condition|<ifAction>IfAction|<elseAction>ElseAction}}");
+    printNode(stringNode, "<statement>ST|{If|{<condition>Condition|<ifAction>IfAction|<elseAction>ElseAction}}");
 
     printEdge(formatNode(node, "condition"), formatNode(node->condition.get()));
     node->condition->Visit(this);
 
-    printEdge(formatNode(node, "ifAction"), formatNode(node->ifAction.get()));
-    node->ifAction->Visit(this);
 
-    printEdge(formatNode(node, "elseAction"), formatNode(node->elseAction.get()));
-    node->elseAction->Visit(this);
-}
-
-void NVisitor::CGraphvizPrinter::Visit(const NNodes::CStatementSequence *const node) {
-    std::string stringNode = formatNode(node);
-    printNode(stringNode, "StatementSequence");
-    if (node->firstStatements) {
-        printEdge(stringNode, formatNode(node->firstStatements.get()));
-        node->firstStatements->Visit(this);
-    }
-    if (node->lastStatement) {
-        printEdge(stringNode, formatNode(node->lastStatement.get()));
-        node->lastStatement->Visit(this);
-    }
+    printStatements(node->ifAction, formatNode(node, "ifAction"));
+    printStatements(node->elseAction, formatNode(node, "elseAction"));
 }
 
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CTypedId *const node) {
     std::string stringNode = formatNode(node);
-    printNode(stringNode, "Id: " + node->name);
-    printEdge(stringNode, formatNode(node->type.get()));
-    node->type->Visit(this);
-}
+    printNode(stringNode, "<variable>VR|{<id>Id: " + node->name + "|<type>Type}");
 
-void NVisitor::CGraphvizPrinter::Visit(const NNodes::CTypedIdSequence *const node) {
-    std::string stringNode = formatNode(node);
-    printNode(stringNode, "TypedIdSequence");
-    if (node->firstTypedIds) {
-        printEdge(stringNode, formatNode(node->firstTypedIds.get()));
-        node->firstTypedIds->Visit(this);
-    }
-    if (node->lastTypedId) {
-        printEdge(stringNode, formatNode(node->lastTypedId.get()));
-        node->lastTypedId->Visit(this);
-    }
+    printEdge(formatNode(node, "type"), formatNode(node->type.get()));
+    node->type->Visit(this);
 }
 
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CMethodSignature *const node) {
@@ -253,93 +208,61 @@ void NVisitor::CGraphvizPrinter::Visit(const NNodes::CMethodSignature *const nod
     }
     printEdge(formatNode(node, "type"), formatNode(node->type.get()));
     node->type->Visit(this);
-    if (node->parameters) {
-        printEdge(formatNode(node, "parameters"), formatNode(node->parameters.get()));
-        node->parameters->Visit(this);
-    }
+
+    printVariables(node->parameters, formatNode(node, "parameters"), "blue");
 }
 
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CMethod *const node) {
     std::string stringNode = formatNode(node);
-    printNode(stringNode, "{Method|{<signature>Signature|<variables>Variables|<actions>Actions|<result>Result}}");
+    printNode(stringNode,
+              "<method>MT|{Method|{<signature>Signature|<variables>Variables|<actions>Actions|<result>Result}}");
 
     printEdge(formatNode(node, "signature"), formatNode(node->signature.get()));
     node->signature->Visit(this);
-    if (node->variables) {
-        printEdge(formatNode(node, "variables"), formatNode(node->variables.get()));
-        node->variables->Visit(this);
-    }
-    if (node->actions) {
-        printEdge(formatNode(node, "actions"), formatNode(node->actions.get()));
-        node->actions->Visit(this);
-    }
+
+    printVariables(node->variables, formatNode(node, "variables"), "gold");
+
+    printStatements(node->actions, formatNode(node, "actions"));
+
     printEdge(formatNode(node, "result"), formatNode(node->result.get()));
     node->result->Visit(this);
 }
 
-void NVisitor::CGraphvizPrinter::Visit(const NNodes::CMethodSequence *const node) {
-    std::string stringNode = formatNode(node);
-    printNode(stringNode, "MethodSequence");
-    if (node->firstMethods) {
-        printEdge(stringNode, formatNode(node->firstMethods.get()));
-        node->firstMethods->Visit(this);
-    }
-    if (node->lastMethod) {
-        printEdge(stringNode, formatNode(node->lastMethod.get()));
-        node->lastMethod->Visit(this);
-    }
-}
-
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CClass *const node) {
     std::string stringNode = formatNode(node);
-    printNode(stringNode, "{Class|{<variables>Variables|<methods>Methods}}");
-    if (node->variables) {
-        printEdge(formatNode(node, "variables"), formatNode(node->variables.get()));
-        node->variables->Visit(this);
-    }
-    if (node->methods) {
-        printEdge(formatNode(node, "methods"), formatNode(node->methods.get()));
-        node->methods->Visit(this);
-    }
+    printNode(stringNode, "<class>Class|<variables>Variables|<methods>Methods");
 
-}
+    printVariables(node->variables, formatNode(node, "variables"), "gold");
+    printMethods(node->methods, formatNode(node, "methods"));
 
-void NVisitor::CGraphvizPrinter::Visit(const NNodes::CClassSequence *const node) {
-    std::string stringNode = formatNode(node);
-    printNode(stringNode, "ClassSequence");
-    if (node->firstClasses) {
-        printEdge(stringNode, formatNode(node->firstClasses.get()));
-        node->firstClasses->Visit(this);
-    }
-    if (node->lastClass) {
-        printEdge(stringNode, formatNode(node->lastClass.get()));
-        node->lastClass->Visit(this);
-    }
 }
 
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CMain *const node) {
     std::string stringNode = formatNode(node);
     printNode(stringNode, "class: " + node->name + "\\ninput: " + node->input);
-    printEdge(stringNode, formatNode(node->statements.get()));
-    node->statements->Visit(this);
+
+    printStatements(node->statements, stringNode);
 }
 
 void NVisitor::CGraphvizPrinter::Visit(const NNodes::CProgram *const node) {
     std::cout << "digraph G {" << std::endl;
     std::string stringNode = formatNode(node);
-    printNode(stringNode, "Program");
+    printNode(stringNode, "{Program|{<main>Main|<classes>Classes}}");
 
-    printEdge(stringNode, formatNode(node->main.get()));
+    printEdge(formatNode(node, "main"), formatNode(node->main.get()));
     node->main->Visit(this);
-    if (node->classes) {
-        printEdge(stringNode, formatNode(node->classes.get()));
-        node->classes->Visit(this);
+
+    stringNode = formatNode(node, "classes");
+    for (auto &&class_:node->classes) {
+        printEdge(stringNode, formatNode(class_.get(), "class"), "", "green");
+        class_->Visit(this);
+        stringNode = formatNode(class_.get(), "class");
     }
 
     std::cout << '}' << std::endl;
 }
 
-std::string NVisitor::CGraphvizPrinter::formatNode(const NNodes::INode *node, const std::string tag) {
+std::string NVisitor::CGraphvizPrinter::formatNode(const NNodes::INode *node, const std::string &tag) {
     std::ostringstream address;
     address << '"' << node << '"';
     if (tag.size() > 0) {
@@ -348,16 +271,75 @@ std::string NVisitor::CGraphvizPrinter::formatNode(const NNodes::INode *node, co
     return address.str();
 }
 
-void NVisitor::CGraphvizPrinter::printNode(const std::string node, const std::string lable) {
+void NVisitor::CGraphvizPrinter::printNode(const std::string &node, const std::string &lable) {
     std::cout << node << "[shape=record,label=\"" << lable << "\"];" << std::endl;
 }
 
-void NVisitor::CGraphvizPrinter::printEdge(const std::string parent, const std::string son, const std::string label) {
+void NVisitor::CGraphvizPrinter::printEdge(const std::string &parent, const std::string &son, const std::string &label,
+                                           const std::string &color) {
     std::cout << parent << "->" << son;
-    if (label.size() > 0) {
+    if (label.size() > 0 && color.size() == 0) {
         std::cout << "[label=\"" << label << "\"]";
     }
+    if (label.size() == 0 && color.size() > 0) {
+        std::cout << "[color=\"" << color << "\"]";
+    }
+    if (label.size() > 0 && color.size() > 0) {
+        std::cout << "[label=\"" << label << ",color=\"" << color << "\"]";
+    }
+
     std::cout << ';' << std::endl;
 }
 
 
+void NVisitor::CGraphvizPrinter::printStatements(
+        const std::vector<std::shared_ptr<const NNodes::IStatement>> &statements,
+        const std::string &node
+) {
+    std::string stringNode = node;
+    for (auto &&statement :statements) {
+        printEdge(stringNode, formatNode(statement.get(), "statement"), "", "red");
+        statement->Visit(this);
+        stringNode = formatNode(statement.get(), "statement");
+    }
+}
+
+void NVisitor::CGraphvizPrinter::printMethods(
+        const std::vector<std::shared_ptr<const NNodes::CMethod>> &methods,
+        const std::string &node
+) {
+    std::string stringNode = node;
+    for (auto &&statement :methods) {
+        printEdge(stringNode, formatNode(statement.get(), "method"), "", "orange");
+        statement->Visit(this);
+        stringNode = formatNode(statement.get(), "method");
+    }
+}
+
+void NVisitor::CGraphvizPrinter::printVariables(
+        const std::vector<std::shared_ptr<const NNodes::CTypedId>> &variables,
+        const std::string &node,
+        const std::string &color
+) {
+    std::string stringNode = node;
+    for (auto &&statement :variables) {
+        printEdge(stringNode, formatNode(statement.get(), "variable"), "", color);
+        statement->Visit(this);
+        stringNode = formatNode(statement.get(), "variable");
+    }
+}
+
+void NVisitor::CGraphvizPrinter::printNodes(
+        const std::vector<std::shared_ptr<const NNodes::INode>> &nodes,
+        const std::string &node,
+        const std::string &tag,
+        const std::string &color
+
+) {
+    std::string stringNode = node;
+    for (auto &&statement :nodes) {
+        printEdge(stringNode, formatNode(statement.get(), tag), "", color);
+        statement->Visit(this);
+        stringNode = formatNode(statement.get(), tag);
+    }
+}

@@ -13,7 +13,10 @@ namespace NNodes {
         friend class NVisitor::CGraphvizPrinter;
 
     public:
-        CTypedId(std::shared_ptr<IType> objectType, const char *objectName);
+        CTypedId(
+                const std::shared_ptr<IType> objectType,
+                const char *objectName
+        );
 
         void Visit(NVisitor::IVisitor *visitor) const override;
     private:

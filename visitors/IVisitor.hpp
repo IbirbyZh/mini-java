@@ -4,6 +4,9 @@
 
 
 namespace NNodes {
+
+    class IStatement;
+
     class CBasicType;
 
     class CClassType;
@@ -31,8 +34,6 @@ namespace NNodes {
 
     class CGetThisId;
 
-    class CCallMethodParameters;
-
 
     class CAssignment;
 
@@ -44,23 +45,15 @@ namespace NNodes {
 
     class CIfDoElseDo;
 
-    class CStatementSequence;
-
 
     class CTypedId;
-
-    class CTypedIdSequence;
 
     class CMethodSignature;
 
     class CMethod;
 
-    class CMethodSequence;
-
 
     class CClass;
-
-    class CClassSequence;
 
 
     class CMain;
@@ -90,23 +83,18 @@ namespace NVisitor {
         virtual void Visit(const NNodes::CCreateNewObject *const node) = 0;
         virtual void Visit(const NNodes::CCreateNewArray *const node) = 0;
         virtual void Visit(const NNodes::CGetThisId *const node) = 0;
-        virtual void Visit(const NNodes::CCallMethodParameters *const node) = 0;
 
         virtual void Visit(const NNodes::CAssignment *const node) = 0;
         virtual void Visit(const NNodes::CAssignmentAtPosition *const node) = 0;
         virtual void Visit(const NNodes::CPrintThing *const node) = 0;
         virtual void Visit(const NNodes::CWhileDo *const node) = 0;
         virtual void Visit(const NNodes::CIfDoElseDo *const node) = 0;
-        virtual void Visit(const NNodes::CStatementSequence *const node) = 0;
 
         virtual void Visit(const NNodes::CTypedId *const node) = 0;
-        virtual void Visit(const NNodes::CTypedIdSequence *const node) = 0;
         virtual void Visit(const NNodes::CMethodSignature *const node) = 0;
         virtual void Visit(const NNodes::CMethod *const node) = 0;
-        virtual void Visit(const NNodes::CMethodSequence *const node) = 0;
 
         virtual void Visit(const NNodes::CClass *const node) = 0;
-        virtual void Visit(const NNodes::CClassSequence *const node) = 0;
 
         virtual void Visit(const NNodes::CMain *const node) = 0;
         virtual void Visit(const NNodes::CProgram *const node) = 0;

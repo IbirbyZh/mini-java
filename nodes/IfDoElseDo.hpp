@@ -2,6 +2,7 @@
 
 #include "INode.hpp"
 #include <memory>
+#include <vector>
 
 namespace NNodes {
 
@@ -11,11 +12,15 @@ namespace NNodes {
         friend class NVisitor::CGraphvizPrinter;
 
     public:
-        CIfDoElseDo(std::shared_ptr<INode> ifCondition, std::shared_ptr<INode> doWhat,
-                    std::shared_ptr<INode> doOtherwise);
+        CIfDoElseDo(
+                const std::shared_ptr<INode> ifCondition,
+                const std::shared_ptr<IStatement> doWhat,
+                const std::shared_ptr<IStatement> doOtherwise
+        );
+
         void Visit(NVisitor::IVisitor *visitor) const override;
     private:
         const std::shared_ptr<INode> condition;
-        const std::shared_ptr<INode> ifAction, elseAction;
+        std::vector<std::shared_ptr<const IStatement>> ifAction, elseAction;
     };
 }

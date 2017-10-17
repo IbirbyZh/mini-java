@@ -6,16 +6,14 @@
 
 namespace NNodes {
 
-    class CCallMethodParameters : public INode {
-        friend class NVisitor::CPrettyPythonPrinter;
-
-        friend class NVisitor::CGraphvizPrinter;
-
+    class CCallMethodParameters {
     public:
-        CCallMethodParameters(std::shared_ptr<INode> callParameter,
-                              std::shared_ptr<CCallMethodParameters> nextParameters);
-        void Visit(NVisitor::IVisitor *visitor) const override;
-        void ToVector(std::vector<std::shared_ptr<INode>> &parameters) const;
+        CCallMethodParameters(
+                std::shared_ptr<INode> callParameter,
+                std::shared_ptr<CCallMethodParameters> nextParameters
+        );
+
+        void ToVector(std::vector<std::shared_ptr<const INode>> &parameters) const;
 
     private:
         const std::shared_ptr<INode> firstParameter;

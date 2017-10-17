@@ -8,7 +8,7 @@ file(MAKE_DIRECTORY src/bison)
 file(MAKE_DIRECTORY src/flex)
 
 set(NodeSrc
-        nodes/INode.hpp
+        nodes/INode.hpp nodes/INode.cpp
         nodes/Nodes.hpp
         nodes/IdExpression.hpp nodes/IdExpression.cpp
         nodes/IntegerExpression.hpp nodes/IntegerExpression.cpp
@@ -48,7 +48,6 @@ set(NodeSrc
 
 set(VisitorSrc
         visitors/IVisitor.hpp
-        visitors/PrettyPythonPrinter.hpp visitors/PrettyPythonPrinter.cpp
         visitors/GraphvizPrinter.cpp visitors/GraphvizPrinter.hpp
         )
 

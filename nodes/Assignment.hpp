@@ -13,7 +13,10 @@ namespace NNodes {
 
 
     public:
-        CAssignment(const char *id, std::shared_ptr<INode> toObject);
+        CAssignment(
+                const char *id,
+                const std::shared_ptr<INode> toObject
+        );
         void Visit(NVisitor::IVisitor *visitor) const override;
     private:
         const std::string lValue;

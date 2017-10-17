@@ -11,7 +11,10 @@ namespace NNodes {
         friend class NVisitor::CGraphvizPrinter;
 
     public:
-        CGetItemAtPosition(const std::shared_ptr<INode> fromObject, const std::shared_ptr<INode> atPosition);
+        CGetItemAtPosition(
+                const std::shared_ptr<INode> fromObject,
+                const std::shared_ptr<INode> atPosition
+        );
 
         void Visit(NVisitor::IVisitor *visitor) const override;
     private:

@@ -17,8 +17,13 @@ namespace NNodes {
             T_MULT,
             T_MOD
         };
-        CIntegerArithmeticOperation(const std::shared_ptr<INode> leftPart, TOperation operationType,
-                                    const std::shared_ptr<INode> rightPart);
+
+        CIntegerArithmeticOperation(
+                const std::shared_ptr<INode> leftPart,
+                TOperation operationType,
+                const std::shared_ptr<INode> rightPart
+        );
+
         void Visit(NVisitor::IVisitor *visitor) const override;
 
     private:

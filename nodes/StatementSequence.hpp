@@ -6,16 +6,14 @@
 
 namespace NNodes {
 
-    class CStatementSequence : public INode {
-        friend class NVisitor::CPrettyPythonPrinter;
-
-        friend class NVisitor::CGraphvizPrinter;
-
+    class CStatementSequence : public IStatement {
     public:
-        CStatementSequence(std::shared_ptr<CStatementSequence> statements,
-                           std::shared_ptr<IStatement> statement);
+        CStatementSequence(
+                const std::shared_ptr<CStatementSequence> statements,
+                const std::shared_ptr<IStatement> statement
+        );
         void Visit(NVisitor::IVisitor *visitor) const override;
-        void ToVector(std::vector<std::shared_ptr<IStatement>> &statements) const;
+        void ToVector(std::vector<std::shared_ptr<const IStatement>> &statements) const override;
 
     private:
         const std::shared_ptr<CStatementSequence> firstStatements;

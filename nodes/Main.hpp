@@ -4,6 +4,7 @@
 #include "StatementSequence.hpp"
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace NNodes {
 
@@ -13,13 +14,16 @@ namespace NNodes {
         friend class NVisitor::CGraphvizPrinter;
 
     public:
-        CMain(const char *className, const char *inputName,
-              std::shared_ptr<CStatementSequence> mainStatements);
+        CMain(
+                const char *className,
+                const char *inputName,
+                std::shared_ptr<CStatementSequence> mainStatements
+        );
 
         void Visit(NVisitor::IVisitor *visitor) const override;
     private:
         const std::string name;
         const std::string input;
-        const std::shared_ptr<CStatementSequence> statements;
+        std::vector<std::shared_ptr<const IStatement>> statements;
     };
 }

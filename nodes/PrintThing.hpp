@@ -11,7 +11,7 @@ namespace NNodes {
         friend class NVisitor::CGraphvizPrinter;
 
     public:
-        explicit CPrintThing(std::shared_ptr<INode> whatObject);
+        explicit CPrintThing(const std::shared_ptr<INode> whatObject);
         void Visit(NVisitor::IVisitor *visitor) const override;
     private:
         const std::shared_ptr<INode> object;

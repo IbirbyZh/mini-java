@@ -11,7 +11,7 @@ namespace NNodes {
         friend class NVisitor::CGraphvizPrinter;
 
     public:
-        explicit CCreateNewArray(std::shared_ptr<INode> arraySize);
+        explicit CCreateNewArray(const std::shared_ptr<INode> arraySize);
         void Visit(NVisitor::IVisitor *visitor) const override;
     private:
         const std::shared_ptr<INode> size;

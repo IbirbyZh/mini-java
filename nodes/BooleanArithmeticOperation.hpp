@@ -17,8 +17,13 @@ namespace NNodes {
             T_LESS,
             T_BANG
         };
-        CBooleanArithmeticOperation(const std::shared_ptr<INode> leftPart, TOperation operationType,
-                                    const std::shared_ptr<INode> rightPart);
+
+        CBooleanArithmeticOperation(
+                const std::shared_ptr<INode> leftPart,
+                TOperation operationType,
+                const std::shared_ptr<INode> rightPart
+        );
+
         void Visit(NVisitor::IVisitor *visitor) const override;
 
     private:

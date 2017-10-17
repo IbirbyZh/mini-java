@@ -5,11 +5,7 @@ NNodes::CMethodSequence::CMethodSequence
          const std::shared_ptr<NNodes::CMethod> method) : firstMethods(methods),
                                                           lastMethod(method) {}
 
-void NNodes::CMethodSequence::Visit(NVisitor::IVisitor *visitor) const {
-    visitor->Visit(this);
-}
-
-void NNodes::CMethodSequence::ToVector(std::vector<std::shared_ptr<CMethod>> &methods) const {
+void NNodes::CMethodSequence::ToVector(std::vector<std::shared_ptr<const CMethod>> &methods) const {
     if (firstMethods) {
         firstMethods->ToVector(methods);
     }

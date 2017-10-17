@@ -8,16 +8,14 @@
 
 namespace NNodes {
 
-    class CTypedIdSequence : public INode {
-        friend class NVisitor::CPrettyPythonPrinter;
-
-        friend class NVisitor::CGraphvizPrinter;
-
+    class CTypedIdSequence {
     public:
-        CTypedIdSequence(std::shared_ptr<CTypedIdSequence> typedIds,
-                         std::shared_ptr<CTypedId> typedId);
-        void Visit(NVisitor::IVisitor *visitor) const override;
-        void ToVector(std::vector<std::shared_ptr<CTypedId>>& typedIds) const;
+        CTypedIdSequence(
+                const std::shared_ptr<CTypedIdSequence> typedIds,
+                const std::shared_ptr<CTypedId> typedId
+        );
+
+        void ToVector(std::vector<std::shared_ptr<const CTypedId>> &typedIds) const;
 
     private:
         const std::shared_ptr<CTypedIdSequence> firstTypedIds;

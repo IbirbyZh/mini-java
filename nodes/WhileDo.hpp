@@ -11,10 +11,14 @@ namespace NNodes {
         friend class NVisitor::CGraphvizPrinter;
 
     public:
-        CWhileDo(std::shared_ptr<INode> whileWhat, std::shared_ptr<INode> doWhat);
+        CWhileDo(
+                const std::shared_ptr<INode> whileWhat,
+                const std::shared_ptr<IStatement> doWhat
+        );
+        
         void Visit(NVisitor::IVisitor *visitor) const override;
     private:
         const std::shared_ptr<INode> condition;
-        const std::shared_ptr<INode> action;
+        std::vector<std::shared_ptr<const IStatement>> actions;
     };
 }
