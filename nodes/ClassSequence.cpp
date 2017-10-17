@@ -8,3 +8,11 @@ NNodes::CClassSequence::CClassSequence
 void NNodes::CClassSequence::Visit(NVisitor::IVisitor *visitor) const {
     visitor->Visit(this);
 }
+
+
+void NNodes::CClassSequence::ToVector(std::vector<std::shared_ptr<NNodes::CClass>> classes) const {
+    if (firstClasses) {
+        firstClasses->ToVector(classes);
+    }
+    classes.push_back(lastClass);
+}

@@ -88,7 +88,7 @@ class QS{
 	}
 	return 0 ;
     }
-    
+
 
     // Initialize array of integers
     public int Init(int sz){

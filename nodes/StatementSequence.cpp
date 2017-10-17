@@ -8,3 +8,10 @@ NNodes::CStatementSequence::CStatementSequence
 void NNodes::CStatementSequence::Visit(NVisitor::IVisitor *visitor) const {
     visitor->Visit(this);
 }
+
+void NNodes::CStatementSequence::ToVector(std::vector<std::shared_ptr<IStatement>> &statements) const {
+    if (firstStatements) {
+        firstStatements->ToVector(statements);
+    }
+    statements.push_back(lastStatement);
+}

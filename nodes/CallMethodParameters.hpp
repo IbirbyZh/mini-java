@@ -2,6 +2,7 @@
 
 #include "INode.hpp"
 #include <memory>
+#include <vector>
 
 namespace NNodes {
 
@@ -14,6 +15,7 @@ namespace NNodes {
         CCallMethodParameters(std::shared_ptr<INode> callParameter,
                               std::shared_ptr<CCallMethodParameters> nextParameters);
         void Visit(NVisitor::IVisitor *visitor) const override;
+        void ToVector(std::vector<std::shared_ptr<INode>> &parameters) const;
 
     private:
         const std::shared_ptr<INode> firstParameter;

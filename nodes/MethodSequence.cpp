@@ -8,3 +8,10 @@ NNodes::CMethodSequence::CMethodSequence
 void NNodes::CMethodSequence::Visit(NVisitor::IVisitor *visitor) const {
     visitor->Visit(this);
 }
+
+void NNodes::CMethodSequence::ToVector(std::vector<std::shared_ptr<CMethod>> &methods) const {
+    if (firstMethods) {
+        firstMethods->ToVector(methods);
+    }
+    methods.push_back(lastMethod);
+}

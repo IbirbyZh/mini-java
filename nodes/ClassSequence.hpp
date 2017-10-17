@@ -3,6 +3,7 @@
 #include "INode.hpp"
 #include "Class.hpp"
 #include <memory>
+#include <vector>
 
 namespace NNodes {
 
@@ -15,6 +16,7 @@ namespace NNodes {
         CClassSequence(std::shared_ptr<CClassSequence> classes,
                        std::shared_ptr<CClass> class_);
         void Visit(NVisitor::IVisitor *visitor) const override;
+        void ToVector(std::vector<std::shared_ptr<CClass>> classes) const;
 
     private:
         const std::shared_ptr<CClassSequence> firstClasses;
