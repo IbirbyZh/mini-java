@@ -9,8 +9,6 @@
 namespace NNodes {
 
     class CCallMethod : public INode {
-        friend class NVisitor::CPrettyPythonPrinter;
-
         friend class NVisitor::CGraphvizPrinter;
 
     public:

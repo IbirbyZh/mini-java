@@ -62,6 +62,7 @@ namespace NNodes {
 
 
     class CMain;
+
     class CProgram;
 }
 

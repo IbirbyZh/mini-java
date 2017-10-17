@@ -5,8 +5,6 @@
 namespace NNodes {
 
     class CIntegerExpression : public INode {
-        friend class NVisitor::CPrettyPythonPrinter;
-
         friend class NVisitor::CGraphvizPrinter;
 
     public:

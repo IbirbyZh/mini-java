@@ -10,8 +10,6 @@
 namespace NNodes {
 
     class CClass : public INode {
-        friend class NVisitor::CPrettyPythonPrinter;
-
         friend class NVisitor::CGraphvizPrinter;
 
     public:

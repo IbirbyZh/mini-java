@@ -6,8 +6,6 @@
 namespace NNodes {
 
     class CWhileDo : public IStatement {
-        friend class NVisitor::CPrettyPythonPrinter;
-
         friend class NVisitor::CGraphvizPrinter;
 
     public:
@@ -15,7 +13,7 @@ namespace NNodes {
                 const std::shared_ptr<INode> whileWhat,
                 const std::shared_ptr<IStatement> doWhat
         );
-        
+
         void Visit(NVisitor::IVisitor *visitor) const override;
     private:
         const std::shared_ptr<INode> condition;

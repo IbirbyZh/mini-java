@@ -6,8 +6,6 @@
 namespace NNodes {
 
     class CGetItemAtPosition : public INode {
-        friend class NVisitor::CPrettyPythonPrinter;
-
         friend class NVisitor::CGraphvizPrinter;
 
     public:

@@ -7,10 +7,7 @@
 namespace NNodes {
 
     class CAssignment : public IStatement {
-        friend class NVisitor::CPrettyPythonPrinter;
-
         friend class NVisitor::CGraphvizPrinter;
-
 
     public:
         CAssignment(

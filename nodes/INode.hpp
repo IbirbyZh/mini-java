@@ -8,8 +8,6 @@ namespace NVisitor {
 
     class IVisitor;
 
-    class CPrettyPythonPrinter;
-
     class CGraphvizPrinter;
 }
 

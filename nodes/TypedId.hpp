@@ -8,8 +8,6 @@
 namespace NNodes {
 
     class CTypedId : public INode {
-        friend class NVisitor::CPrettyPythonPrinter;
-
         friend class NVisitor::CGraphvizPrinter;
 
     public:

@@ -6,8 +6,6 @@
 namespace NNodes {
 
     class CClassType : public IType {
-        friend class NVisitor::CPrettyPythonPrinter;
-
         friend class NVisitor::CGraphvizPrinter;
 
     public:

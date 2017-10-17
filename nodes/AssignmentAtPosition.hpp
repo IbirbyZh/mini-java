@@ -7,8 +7,6 @@
 namespace NNodes {
 
     class CAssignmentAtPosition : public IStatement {
-        friend class NVisitor::CPrettyPythonPrinter;
-
         friend class NVisitor::CGraphvizPrinter;
 
     public:
