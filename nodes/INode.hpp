@@ -17,6 +17,9 @@ namespace NNodes {
         virtual ~INode() = default;
 
         virtual void Visit(NVisitor::IVisitor *visitor) const = 0;
+
+        void AddLocation(int line, int column);
+        int startColumn, startLine;
     };
 
     typedef INode IType;
