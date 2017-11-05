@@ -15,3 +15,15 @@ NNodes::CMethodSignature::CMethodSignature(
 void NNodes::CMethodSignature::Visit(NVisitor::IVisitor *visitor) const {
     visitor->Visit(this);
 }
+
+const std::shared_ptr<NNodes::IType> &NNodes::CMethodSignature::GetType() const {
+    return type;
+}
+
+const std::string &NNodes::CMethodSignature::GetName() const {
+    return name;
+}
+
+const std::vector<std::shared_ptr<const NNodes::CTypedId>> &NNodes::CMethodSignature::GetParameters() const {
+    return parameters;
+}

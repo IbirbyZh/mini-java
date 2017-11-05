@@ -17,3 +17,11 @@ NNodes::CMethod::CMethod(
 void NNodes::CMethod::Visit(NVisitor::IVisitor *visitor) const {
     visitor->Visit(this);
 }
+
+const std::shared_ptr<NNodes::CMethodSignature> &NNodes::CMethod::GetSignature() const {
+    return signature;
+}
+
+const std::vector<std::shared_ptr<const NNodes::CTypedId>> &NNodes::CMethod::GetVariables() const {
+    return variables;
+}

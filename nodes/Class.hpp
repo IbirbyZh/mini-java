@@ -27,6 +27,11 @@ namespace NNodes {
         );
 
         void Visit(NVisitor::IVisitor *visitor) const override;
+
+        const std::string &GetName() const;
+        const std::string &GetExtendsName() const;
+        const std::vector<std::shared_ptr<const CTypedId>> &GetVariables() const;
+        const std::vector<std::shared_ptr<const CMethod>> &GetMethods() const;
     private:
         const std::string name;
         const std::string extendsName;

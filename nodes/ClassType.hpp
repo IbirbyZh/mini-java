@@ -11,6 +11,7 @@ namespace NNodes {
     public:
         explicit CClassType(const char *className);
         void Visit(NVisitor::IVisitor *visitor) const override;
+        const std::string &ToString() const override;
     private:
         const std::string name;
     };

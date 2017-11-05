@@ -17,6 +17,8 @@ namespace NNodes {
         );
 
         void Visit(NVisitor::IVisitor *visitor) const override;
+        const std::shared_ptr<IType> &GetType() const;
+        const std::string &GetName() const;
     private:
         const std::shared_ptr<IType> type;
         const std::string name;

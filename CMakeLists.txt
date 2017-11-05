@@ -51,6 +51,14 @@ set(VisitorSrc
         visitors/GraphvizPrinter.cpp visitors/GraphvizPrinter.hpp
         )
 
+set(TableSrc
+        table/StringInternist.cpp table/StringInternist.hpp
+        table/Symbol.cpp table/Symbol.hpp
+        table/VariableInfo.cpp table/VariableInfo.hpp
+        table/MethodInfo.cpp table/MethodInfo.hpp
+        table/ClassInfo.cpp table/ClassInfo.hpp
+        )
+
 
 set(BisonFile ${CMAKE_SOURCE_DIR}/bison.y)
 set(BisonOutput ${CMAKE_SOURCE_DIR}/src/bison/parser.cpp)
@@ -99,12 +107,14 @@ endif ()
 include_directories(nodes visitors)
 
 add_library(nodes STATIC ${NodeSrc})
+add_library(table STATIC ${TableSrc})
 add_library(visitors ${VisitorSrc})
 add_library(flex_scanner ${FlexOutput})
 
 add_executable(mini-java ${BisonOutput})
 
 target_link_libraries(mini-java nodes)
+target_link_libraries(mini-java table)
 target_link_libraries(mini-java visitors)
 target_link_libraries(mini-java flex_scanner)
 

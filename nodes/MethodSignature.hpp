@@ -20,6 +20,9 @@ namespace NNodes {
                 const std::shared_ptr<CTypedIdSequence> methodParameters
         );
         void Visit(NVisitor::IVisitor *visitor) const override;
+        const std::shared_ptr<IType> &GetType() const;
+        const std::string &GetName() const;
+        const std::vector<std::shared_ptr<const CTypedId>> &GetParameters() const;
     private:
         bool isPrivate;
         const std::shared_ptr<IType> type;

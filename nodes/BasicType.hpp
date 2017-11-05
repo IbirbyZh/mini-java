@@ -17,7 +17,12 @@ namespace NNodes {
 
         explicit CBasicType(TType basicType);
         void Visit(NVisitor::IVisitor *visitor) const override;
+        const std::string &ToString() const override;
+
     private:
         TType type;
+        static const std::string INT;
+        static const std::string BOOL;
+        static const std::string INT_ARRAY;
     };
 }

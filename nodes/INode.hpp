@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <vector>
+#include <string>
 
 namespace NVisitor {
 
@@ -22,7 +23,10 @@ namespace NNodes {
         int startColumn, startLine;
     };
 
-    typedef INode IType;
+    class IType : public INode {
+    public:
+        virtual const std::string &ToString() const = 0;
+    };
 
     class IStatement : public INode, public std::enable_shared_from_this<IStatement> {
     public:
