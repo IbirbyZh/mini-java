@@ -57,6 +57,7 @@ set(TableSrc
         table/VariableInfo.cpp table/VariableInfo.hpp
         table/MethodInfo.cpp table/MethodInfo.hpp
         table/ClassInfo.cpp table/ClassInfo.hpp
+        table/Table.cpp table/Table.hpp
         )
 
 
@@ -104,7 +105,7 @@ if (FLEX_FOUND)
     )
 endif ()
 
-include_directories(nodes visitors)
+include_directories(nodes visitors table)
 
 add_library(nodes STATIC ${NodeSrc})
 add_library(table STATIC ${TableSrc})

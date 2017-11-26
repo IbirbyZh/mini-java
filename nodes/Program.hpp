@@ -15,7 +15,7 @@ namespace NNodes {
                 const std::shared_ptr<CMain> mainClass,
                 const std::shared_ptr<CClassSequence> additionalClasses
         );
-
+        const std::vector<std::shared_ptr<const CClass>> &GetClasses() const;
         void Visit(NVisitor::IVisitor *visitor) const override;
     private:
         const std::shared_ptr<CMain> main;

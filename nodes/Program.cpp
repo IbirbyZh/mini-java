@@ -12,3 +12,7 @@ NNodes::CProgram::CProgram(const std::shared_ptr<NNodes::CMain> mainClass,
 void NNodes::CProgram::Visit(NVisitor::IVisitor *visitor) const {
     visitor->Visit(this);
 }
+
+const std::vector<std::shared_ptr<const NNodes::CClass>> &NNodes::CProgram::GetClasses() const {
+    return classes;
+}

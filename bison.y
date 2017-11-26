@@ -294,7 +294,7 @@ exp
   | integer_number                                                  {$$ = new CIntegerExpression($1); $$->AddLocation(yylloc.first_line, yylloc.first_column);}
   | T_TRUE                                                          {$$ = new CBooleanExpression(true); $$->AddLocation(yylloc.first_line, yylloc.first_column);}
   | T_FALSE                                                         {$$ = new CBooleanExpression(false); $$->AddLocation(yylloc.first_line, yylloc.first_column);}
-  | id                                                              {$$ = new CIdExpression($1); delete[] $1; $$->AddLocation(yylloc.first_line, yylloc.first_column);}
+  | id                                                              {$$ = new CIdExpression($1); $$->AddLocation(yylloc.first_line, yylloc.first_column); delete[] $1;}
   | T_THIS                                                          {$$ = new CGetThisId(); $$->AddLocation(yylloc.first_line, yylloc.first_column);}
   | T_NEW T_INT T_L_SQUARE exp T_R_SQUARE                           {$$ = new CCreateNewArray(std::shared_ptr<INode>($4)); $$->AddLocation(yylloc.first_line, yylloc.first_column);}
   | T_NEW id T_L_PAREN T_R_PAREN                                    {$$ = new CCreateNewObject($2); $$->AddLocation(yylloc.first_line, yylloc.first_column); delete[] $2;}
