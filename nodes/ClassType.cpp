@@ -11,3 +11,7 @@ void NNodes::CClassType::Visit(NVisitor::IVisitor *visitor) const {
 const std::string &NNodes::CClassType::ToString() const {
     return name;
 }
+
+const std::string &NNodes::CClassType::GetName() const {
+    return name;
+}

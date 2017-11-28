@@ -21,3 +21,7 @@ const std::string &NNodes::CBasicType::ToString() const {
     }
     throw;
 }
+
+NNodes::CBasicType::TType NNodes::CBasicType::GetType() const {
+    return type;
+}

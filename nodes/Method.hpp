@@ -22,6 +22,8 @@ namespace NNodes {
         void Visit(NVisitor::IVisitor *visitor) const override;
         const std::shared_ptr<CMethodSignature> &GetSignature() const;
         const std::vector<std::shared_ptr<const CTypedId>> &GetVariables() const;
+        const std::vector<std::shared_ptr<const IStatement>> &GetActions() const;
+        const std::shared_ptr<INode> &GetResult() const;
     private:
         const std::shared_ptr<CMethodSignature> signature;
         std::vector<std::shared_ptr<const CTypedId>> variables;

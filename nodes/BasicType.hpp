@@ -9,6 +9,10 @@ namespace NNodes {
         friend class NVisitor::CGraphvizPrinter;
 
     public:
+        static const std::string BOOL;
+        static const std::string INT;
+        static const std::string INT_ARRAY;
+
         enum TType {
             BT_INT,
             BT_BOOL,
@@ -18,11 +22,9 @@ namespace NNodes {
         explicit CBasicType(TType basicType);
         void Visit(NVisitor::IVisitor *visitor) const override;
         const std::string &ToString() const override;
+        TType GetType() const;
 
     private:
         TType type;
-        static const std::string INT;
-        static const std::string BOOL;
-        static const std::string INT_ARRAY;
     };
 }

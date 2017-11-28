@@ -16,3 +16,15 @@ NNodes::CIfDoElseDo::CIfDoElseDo(
 void NNodes::CIfDoElseDo::Visit(NVisitor::IVisitor *visitor) const {
     visitor->Visit(this);
 }
+
+const std::shared_ptr<NNodes::INode> &NNodes::CIfDoElseDo::GetCondition() const {
+    return condition;
+}
+
+const std::vector<std::shared_ptr<const NNodes::IStatement>> &NNodes::CIfDoElseDo::GetIfAction() const {
+    return ifAction;
+}
+
+const std::vector<std::shared_ptr<const NNodes::IStatement>> &NNodes::CIfDoElseDo::GetElseAction() const {
+    return elseAction;
+}

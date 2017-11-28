@@ -1,12 +1,12 @@
 import subprocess
 import argparse
 import os
+import sys
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--executable')
-    parser.add_argument('--input')
     return parser.parse_args()
 
 
@@ -27,8 +27,9 @@ if __name__ == '__main__':
     except subprocess.CalledProcessError:
         print 'Build Failed'
         raise
-
-    with open(args.input) as input_stream, open('output.txt', 'w') as output_stream:
-        subprocess.call([args.executable], stdin=input_stream, stdout=output_stream)
-    with open(os.devnull, "w") as nothing:
-        subprocess.call(['dot', '-Tpng', '-O', 'output.txt'], stdout=nothing, stderr=nothing)
+    for directory in ['Samples', 'BadSamples']:
+        for filename in os.listdir(directory):
+            print filename
+            with open(os.path.join(directory, filename)) as input_stream:
+                subprocess.call([args.executable], stdin=input_stream, stdout=sys.stdout, stderr=sys.stderr)
+            print '==' * 30

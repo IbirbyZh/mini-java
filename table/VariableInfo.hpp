@@ -10,10 +10,21 @@ namespace NTable {
     class CVariableInfo {
     public:
         CVariableInfo() = delete;
+
+        CVariableInfo(const CVariableInfo &other) = default;
+        CVariableInfo &operator=(const CVariableInfo &other) = default;
+
+        CVariableInfo(CVariableInfo &&other) = default;
+        CVariableInfo &operator=(CVariableInfo &&other) = default;
+
         explicit CVariableInfo(const std::shared_ptr<const NNodes::CTypedId> &typedId);
+
+        const CSymbol *GetType() const;
+        const CSymbol *GetName() const;
+
     private:
-        const CSymbol &type;
-        const CSymbol &name;
+        const CSymbol *type;
+        const CSymbol *name;
     };
 }
 

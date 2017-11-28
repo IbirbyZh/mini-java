@@ -12,3 +12,15 @@ NNodes::CIntegerArithmeticOperation::CIntegerArithmeticOperation(
                                                   right(rightPart) {
 
 }
+
+const std::shared_ptr<NNodes::INode> &NNodes::CIntegerArithmeticOperation::GetLeft() const {
+    return left;
+}
+
+const std::shared_ptr<NNodes::INode> &NNodes::CIntegerArithmeticOperation::GetRight() const {
+    return right;
+}
+
+NNodes::CIntegerArithmeticOperation::TOperation NNodes::CIntegerArithmeticOperation::GetType() const {
+    return type;
+}

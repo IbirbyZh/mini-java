@@ -5,3 +5,7 @@ NNodes::CCreateNewObject::CCreateNewObject(const char *className) : name(classNa
 void NNodes::CCreateNewObject::Visit(NVisitor::IVisitor *visitor) const {
     visitor->Visit(this);
 }
+
+const std::string &NNodes::CCreateNewObject::GetName() const {
+    return name;
+}

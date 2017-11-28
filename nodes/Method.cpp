@@ -25,3 +25,11 @@ const std::shared_ptr<NNodes::CMethodSignature> &NNodes::CMethod::GetSignature()
 const std::vector<std::shared_ptr<const NNodes::CTypedId>> &NNodes::CMethod::GetVariables() const {
     return variables;
 }
+
+const std::vector<std::shared_ptr<const NNodes::IStatement>> &NNodes::CMethod::GetActions() const {
+    return actions;
+}
+
+const std::shared_ptr<NNodes::INode> &NNodes::CMethod::GetResult() const {
+    return result;
+}

@@ -14,7 +14,8 @@
     #include <iostream>
     #include <memory>
     #include "GraphvizPrinter.hpp"
-    NVisitor::IVisitor *prettyPrinter = new NVisitor::CGraphvizPrinter();
+    #include "TypeChecker.cpp"
+    NVisitor::IVisitor *prettyPrinter = new NVisitor::CTypeChecker();
     extern int yylex();
     void yyerror(char *s);
 %}
@@ -67,6 +68,8 @@
 %token T_INTEGER_NUMBER
 
 %token T_END_LINE
+
+%token T_ERROR
 
 %token T_END 0
 
@@ -121,9 +124,11 @@
 %left T_MOD
 %left T_MULT
 
+%right T_BANG
+
 %left T_DOT
 %left T_L_SQUARE
-%right T_BANG
+
 
 
 %%
@@ -323,7 +328,7 @@ integer_number
 
 
 void yyerror(char* s) {
-    printf("AGAIN %s at %d,%d:%d\n",
+    printf("ERROR: Grammar error (%s) at %d,%d:%d\n",
         s, yylloc.first_line, yylloc.first_column, yylloc.last_column);
 }
 

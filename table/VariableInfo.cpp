@@ -5,3 +5,11 @@ NTable::CVariableInfo::CVariableInfo(const std::shared_ptr<const NNodes::CTypedI
           type(NTable::CStringInternist::GetInstance().Intern(typedId->GetType()->ToString())) {
 
 }
+
+const NTable::CSymbol *NTable::CVariableInfo::GetType() const {
+    return type;
+}
+
+const NTable::CSymbol *NTable::CVariableInfo::GetName() const {
+    return name;
+}

@@ -17,6 +17,9 @@ namespace NNodes {
         );
 
         void Visit(NVisitor::IVisitor *visitor) const override;
+        const std::string &GetLValue() const;
+        const std::shared_ptr<INode> &GetRValue() const;
+        const std::shared_ptr<INode> &GetPosition() const;
     private:
         const std::string lValue;
         const std::shared_ptr<INode> position;

@@ -13,3 +13,15 @@ NNodes::CBooleanArithmeticOperation::CBooleanArithmeticOperation(
         right(rightPart) {
 
 }
+
+const std::shared_ptr<NNodes::INode> &NNodes::CBooleanArithmeticOperation::GetLeft() const {
+    return left;
+}
+
+const std::shared_ptr<NNodes::INode> &NNodes::CBooleanArithmeticOperation::GetRight() const {
+    return right;
+}
+
+NNodes::CBooleanArithmeticOperation::TOperation NNodes::CBooleanArithmeticOperation::GetType() const {
+    return type;
+}

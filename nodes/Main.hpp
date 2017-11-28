@@ -19,6 +19,7 @@ namespace NNodes {
         );
 
         void Visit(NVisitor::IVisitor *visitor) const override;
+        const std::vector<std::shared_ptr<const IStatement>> &GetStatements() const;
     private:
         const std::string name;
         const std::string input;

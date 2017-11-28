@@ -15,6 +15,8 @@ namespace NNodes {
         );
 
         void Visit(NVisitor::IVisitor *visitor) const override;
+        const std::shared_ptr <INode> &GetCondition() const;
+        const std::vector<std::shared_ptr<const IStatement>> &GetActions() const;
     private:
         const std::shared_ptr<INode> condition;
         std::vector<std::shared_ptr<const IStatement>> actions;

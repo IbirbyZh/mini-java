@@ -9,3 +9,7 @@ NNodes::CMain::CMain(const char *className, const char *inputName,
 void NNodes::CMain::Visit(NVisitor::IVisitor *visitor) const {
     visitor->Visit(this);
 }
+
+const std::vector<std::shared_ptr<const NNodes::IStatement>> &NNodes::CMain::GetStatements() const {
+    return statements;
+}

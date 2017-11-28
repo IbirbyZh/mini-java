@@ -19,6 +19,9 @@ namespace NNodes {
         );
 
         void Visit(NVisitor::IVisitor *visitor) const override;
+        const std::shared_ptr<INode> &GetObject() const;
+        const std::string &GetName() const;
+        const std::vector<std::shared_ptr<const INode>> &GetParameters() const;
     private:
         const std::shared_ptr<INode> object;
         const std::string name;

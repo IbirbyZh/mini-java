@@ -23,7 +23,9 @@ namespace NNodes {
         );
 
         void Visit(NVisitor::IVisitor *visitor) const override;
-
+        const std::shared_ptr<INode> &GetLeft() const;
+        const std::shared_ptr<INode> &GetRight() const;
+        TOperation GetType() const;
     private:
         const std::shared_ptr<INode> left, right;
         TOperation type;

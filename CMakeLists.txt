@@ -49,6 +49,7 @@ set(NodeSrc
 set(VisitorSrc
         visitors/IVisitor.hpp
         visitors/GraphvizPrinter.cpp visitors/GraphvizPrinter.hpp
+        visitors/TypeChecker.cpp visitors/TypeChecker.hpp
         )
 
 set(TableSrc
@@ -58,6 +59,7 @@ set(TableSrc
         table/MethodInfo.cpp table/MethodInfo.hpp
         table/ClassInfo.cpp table/ClassInfo.hpp
         table/Table.cpp table/Table.hpp
+        table/TableScope.cpp table/TableScope.hpp
         )
 
 

@@ -132,6 +132,8 @@ INTEGER_NUMBER                  {POSITIVE}({DIGIT})*|{ZERO}
 {ID}                            yylval.strValue=yytext; return T_ID;
 {INTEGER_NUMBER}                yylval.intValue=atoi(yytext); return T_INTEGER_NUMBER;
 
+
+
 "//".*
 \n                              {
                                     lineNumber += 1;
@@ -145,6 +147,6 @@ INTEGER_NUMBER                  {POSITIVE}({DIGIT})*|{ZERO}
                                     return 0;
                                 }
 
-.	printf("\nFucking bullshit at %d,%d\n", lineNumber, columnNumber );
+.	{printf("Unexpected token: %s\n", yytext); return T_ERROR;}
 
 %%

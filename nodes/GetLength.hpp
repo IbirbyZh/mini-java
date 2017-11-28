@@ -11,6 +11,7 @@ namespace NNodes {
     public:
         explicit CGetLength(std::shared_ptr<INode> fromObject);
         void Visit(NVisitor::IVisitor *visitor) const override;
+        const std::shared_ptr<INode> &GetObject() const;
     private:
         const std::shared_ptr<INode> object;
     };
