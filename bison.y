@@ -13,12 +13,8 @@
     using namespace NNodes;
     #include <iostream>
     #include <memory>
-    #include "GraphvizPrinter.hpp"
-    #include "TypeChecker.cpp"
     extern int yylex();
-    void yyerror(char *s);
-
-    CProgram * syntaxTree;
+    void yyerror(CProgram ** syntaxTree, char* s);
 %}
 
 %token T_CLASS
@@ -131,11 +127,12 @@
 %left T_L_SQUARE
 
 
+%parse-param  {CProgram **syntaxTree}
 
 %%
 goal
-  : class_main T_END                                                {$$ = new CProgram(std::shared_ptr<CMain>($1), nullptr); $$->AddLocation(yylloc.first_line, yylloc.first_column); syntaxTree = $$;}
-  | class_main seq_class T_END                                      {$$ = new CProgram(std::shared_ptr<CMain>($1), std::shared_ptr<CClassSequence>($2)); $$->AddLocation(yylloc.first_line, yylloc.first_column); syntaxTree = $$;}
+  : class_main T_END                                                {$$ = new CProgram(std::shared_ptr<CMain>($1), nullptr); $$->AddLocation(yylloc.first_line, yylloc.first_column); *syntaxTree = $$;}
+  | class_main seq_class T_END                                      {$$ = new CProgram(std::shared_ptr<CMain>($1), std::shared_ptr<CClassSequence>($2)); $$->AddLocation(yylloc.first_line, yylloc.first_column); *syntaxTree = $$;}
 ;
 
 
@@ -328,15 +325,7 @@ integer_number
 
 
 
-void yyerror(char* s) {
+void yyerror(CProgram ** syntaxTree, char* s) {
     printf("ERROR: Grammar error (%s) at %d,%d:%d\n",
         s, yylloc.first_line, yylloc.first_column, yylloc.last_column);
-}
-
-int main(void) {
-    yyparse();
-    NVisitor::IVisitor *prettyPrinter = new NVisitor::CTypeChecker();
-    syntaxTree->Visit(prettyPrinter);
-    delete prettyPrinter;
-
 }

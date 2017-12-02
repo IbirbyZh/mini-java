@@ -114,7 +114,7 @@ add_library(table STATIC ${TableSrc})
 add_library(visitors ${VisitorSrc})
 add_library(flex_scanner ${FlexOutput})
 
-add_executable(mini-java ${BisonOutput})
+add_executable(mini-java ${BisonOutput} main.cpp)
 
 target_link_libraries(mini-java nodes)
 target_link_libraries(mini-java table)
