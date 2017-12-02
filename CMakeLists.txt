@@ -62,6 +62,14 @@ set(TableSrc
         table/TableScope.cpp table/TableScope.hpp
         )
 
+set(IRTreeSrc
+        ir-tree/IAccess.hpp
+        ir-tree/InRegisterAccess.cpp ir-tree/InRegisterAccess.hpp
+        ir-tree/InFrameAccess.cpp ir-tree/InFrameAccess.hpp
+        ir-tree/IFrame.hpp
+        ir-tree/MiniJavaFrame.cpp ir-tree/MiniJavaFrame.hpp
+        )
+
 
 set(BisonFile ${CMAKE_SOURCE_DIR}/bison.y)
 set(BisonOutput ${CMAKE_SOURCE_DIR}/src/bison/parser.cpp)
@@ -107,8 +115,9 @@ if (FLEX_FOUND)
     )
 endif ()
 
-include_directories(nodes visitors table)
+include_directories(nodes visitors table ir-tree)
 
+add_library(ir_tree STATIC ${IRTreeSrc})
 add_library(nodes STATIC ${NodeSrc})
 add_library(table STATIC ${TableSrc})
 add_library(visitors ${VisitorSrc})
@@ -116,6 +125,7 @@ add_library(flex_scanner ${FlexOutput})
 
 add_executable(mini-java ${BisonOutput} main.cpp)
 
+target_link_libraries(mini-java ir_tree)
 target_link_libraries(mini-java nodes)
 target_link_libraries(mini-java table)
 target_link_libraries(mini-java visitors)
