@@ -3,6 +3,6 @@
 
 namespace NIRTree {
     interface IAccess {
-        virtual ~IAccess() {}
+        virtual ~IAccess() = default;
     };
 }
