@@ -15,9 +15,10 @@
     #include <memory>
     #include "GraphvizPrinter.hpp"
     #include "TypeChecker.cpp"
-    NVisitor::IVisitor *prettyPrinter = new NVisitor::CTypeChecker();
     extern int yylex();
     void yyerror(char *s);
+
+    CProgram * syntaxTree;
 %}
 
 %token T_CLASS
@@ -133,8 +134,8 @@
 
 %%
 goal
-  : class_main T_END                                                {$$ = new CProgram(std::shared_ptr<CMain>($1), nullptr); $$->AddLocation(yylloc.first_line, yylloc.first_column); $$->Visit(prettyPrinter); delete prettyPrinter;}
-  | class_main seq_class T_END                                      {$$ = new CProgram(std::shared_ptr<CMain>($1), std::shared_ptr<CClassSequence>($2)); $$->AddLocation(yylloc.first_line, yylloc.first_column); $$->Visit(prettyPrinter); delete prettyPrinter;}
+  : class_main T_END                                                {$$ = new CProgram(std::shared_ptr<CMain>($1), nullptr); $$->AddLocation(yylloc.first_line, yylloc.first_column); syntaxTree = $$;}
+  | class_main seq_class T_END                                      {$$ = new CProgram(std::shared_ptr<CMain>($1), std::shared_ptr<CClassSequence>($2)); $$->AddLocation(yylloc.first_line, yylloc.first_column); syntaxTree = $$;}
 ;
 
 
@@ -334,4 +335,8 @@ void yyerror(char* s) {
 
 int main(void) {
     yyparse();
+    NVisitor::IVisitor *prettyPrinter = new NVisitor::CTypeChecker();
+    syntaxTree->Visit(prettyPrinter);
+    delete prettyPrinter;
+
 }
