@@ -33,6 +33,7 @@ namespace NVisitor {
         void Visit(const NNodes::CClass *const node) override;
         void Visit(const NNodes::CMain *const node) override;
         void Visit(const NNodes::CProgram *const node) override;
+        bool IsHasError() const;
     private:
         void printPosition(const NNodes::INode *const node) const;
         std::shared_ptr<NTable::CTable> table;
@@ -41,6 +42,7 @@ namespace NVisitor {
         const NTable::CSymbol *boolType;
         const NTable::CSymbol *intType;
         const NTable::CSymbol *intArrayType;
+        bool hasError;
 
     };
 }

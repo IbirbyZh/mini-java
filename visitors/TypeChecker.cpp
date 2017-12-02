@@ -22,6 +22,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CClassType *const node) {
     if (classInfo == nullptr) {
         std::cout << "ERROR: Wrong Type";
         printPosition(node);
+        hasError = true;
         expressionType = nullptr;
     } else {
         expressionType = classInfo->GetName();
@@ -34,6 +35,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CIdExpression *const node) {
     if (variableInfo == nullptr) {
         std::cout << "ERROR: Undefined variable";
         printPosition(node);
+        hasError = true;
         expressionType = nullptr;
     } else {
         expressionType = variableInfo->GetType();
@@ -50,6 +52,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CIntegerArithmeticOperation *co
     if (expressionType != intType) {
         std::cout << "ERROR: Wrong left operand " << expressionType->ToString();
         printPosition(node);
+        hasError = true;
     }
     expressionType = nullptr;
 
@@ -57,6 +60,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CIntegerArithmeticOperation *co
     if (expressionType != intType) {
         std::cout << "ERROR: Wrong right operand " << expressionType->ToString();
         printPosition(node);
+        hasError = true;
     }
     expressionType = intType;
 }
@@ -73,6 +77,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CBooleanArithmeticOperation *co
             if (expressionType != boolType) {
                 std::cout << "ERROR: Wrong left operand " << expressionType->ToString();
                 printPosition(node);
+                hasError = true;
             }
             expressionType = nullptr;
         case NNodes::CBooleanArithmeticOperation::T_BANG:
@@ -80,6 +85,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CBooleanArithmeticOperation *co
             if (expressionType != boolType) {
                 std::cout << "ERROR: Wrong right operand " << expressionType->ToString();
                 printPosition(node);
+                hasError = true;
             }
             break;
         case NNodes::CBooleanArithmeticOperation::T_LESS:
@@ -87,12 +93,14 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CBooleanArithmeticOperation *co
             if (expressionType != intType) {
                 std::cout << "ERROR: Wrong left operand " << expressionType->ToString();
                 printPosition(node);
+                hasError = true;
             }
             expressionType = nullptr;
             node->GetRight()->Visit(this);
             if (expressionType != intType) {
                 std::cout << "ERROR: Wrong right operand " << expressionType->ToString();
                 printPosition(node);
+                hasError = true;
             }
             break;
 
@@ -105,11 +113,13 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CGetItemAtPosition *const node)
     if (expressionType != intArrayType) {
         std::cout << "ERROR: No item getter";
         printPosition(node);
+        hasError = true;
     }
     node->GetPosition()->Visit(this);
     if (expressionType != intType) {
         std::cout << "ERROR: Array index not int";
         printPosition(node);
+        hasError = true;
     }
     expressionType = intType;
 }
@@ -122,6 +132,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CCallMethod *const node) {
     if (classInfo == nullptr) {
         std::cout << "ERROR: Call method of wrong class";
         printPosition(node);
+        hasError = true;
         expressionType = nullptr;
         return;
     }
@@ -133,6 +144,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CCallMethod *const node) {
     if (methodInfo == nullptr) {
         std::cout << "ERROR: Unknown method name";
         printPosition(node);
+        hasError = true;
         expressionType = nullptr;
         return;
     }
@@ -140,6 +152,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CCallMethod *const node) {
     if (node->GetParameters().size() != methodInfo->GetPositionParameters().size()) {
         std::cout << "ERROR: Wrong parameters number";
         printPosition(node);
+        hasError = true;
         expressionType = nullptr;
         return;
     } else {
@@ -148,6 +161,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CCallMethod *const node) {
             if (expressionType != methodInfo->GetPositionParameters()[i]) {
                 std::cout << "ERROR: Wrong parameter type " << expressionType->ToString();
                 printPosition(node);
+                hasError = true;
             }
         }
     }
@@ -159,6 +173,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CGetLength *const node) {
     if (expressionType != intArrayType) {
         std::cout << "ERROR: No length attribute";
         printPosition(node);
+        hasError = true;
     }
     expressionType = intType;
 }
@@ -170,6 +185,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CCreateNewObject *const node) {
         and classInfo == nullptr) {
         std::cout << "ERROR: Wrong type";
         printPosition(node);
+        hasError = true;
     }
     expressionType = objectType;
 }
@@ -179,6 +195,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CCreateNewArray *const node) {
     if (expressionType != intType) {
         std::cout << "ERROR: Size of array not int";
         printPosition(node);
+        hasError = true;
     }
     expressionType = intArrayType;
 }
@@ -193,9 +210,11 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CAssignment *const node) {
     if (variableInfo == nullptr) {
         std::cout << "ERROR: No variable in scope";
         printPosition(node);
+        hasError = true;
     } else if (variableInfo->GetType() != expressionType) {
         std::cout << "ERROR: Different types";
         printPosition(node);
+        hasError = true;
     }
     expressionType = nullptr;
 }
@@ -205,20 +224,24 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CAssignmentAtPosition *const no
     if (variableInfo == nullptr) {
         std::cout << "ERROR: No variable in scope";
         printPosition(node);
+        hasError = true;
     } else if (variableInfo->GetType() != intArrayType) {
         std::cout << "ERROR: No item getter";
         printPosition(node);
+        hasError = true;
     }
 
     node->GetPosition()->Visit(this);
     if (expressionType != intType) {
         std::cout << "ERROR: Assignment in non int index";
         printPosition(node);
+        hasError = true;
     }
     node->GetRValue()->Visit(this);
     if (expressionType != intType) {
         std::cout << "ERROR: Assignment non int to int[]";
         printPosition(node);
+        hasError = true;
     }
     expressionType = nullptr;
 }
@@ -228,6 +251,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CPrintThing *const node) {
     if (expressionType != boolType and expressionType != intType and expressionType != intArrayType) {
         std::cout << "ERROR: Can't print custom class";
         printPosition(node);
+        hasError = true;
     }
     expressionType = nullptr;
 }
@@ -237,6 +261,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CWhileDo *const node) {
     if (expressionType != boolType) {
         std::cout << "ERROR: Wrong condition type";
         printPosition(node);
+        hasError = true;
     }
     expressionType = nullptr;
     for (auto &&item:node->GetActions()) {
@@ -250,6 +275,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CIfDoElseDo *const node) {
     if (expressionType != boolType) {
         std::cout << "ERROR: Wrong condition type";
         printPosition(node);
+        hasError = true;
     }
     expressionType = nullptr;
     for (auto &&item:node->GetIfAction()) {
@@ -275,6 +301,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CMethodSignature *const node) {
         if (parameters.find(name) != parameters.end()) {
             std::cout << "ERROR: Copy parameter name";
             printPosition(node);
+            hasError = true;
         }
         parameters.insert(name);
     }
@@ -297,6 +324,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CMethod *const node) {
     if (expressionType != resultType) {
         std::cout << "ERROR: Wrong result type";
         printPosition(node);
+        hasError = true;
     }
 
     table->PopScope();
@@ -308,6 +336,7 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CClass *const node) {
     if (!table->IsValidParentClasses(currentClass)) {
         std::cout << "ERROR: Problem in class inheritance";
         printPosition(node);
+        hasError = true;
         return;
     }
 
@@ -344,4 +373,8 @@ NVisitor::CTypeChecker::CTypeChecker()
 
 void NVisitor::CTypeChecker::printPosition(const NNodes::INode *const node) const {
     std::cout << ' ' << node->startLine << ':' << node->startColumn << std::endl;
+}
+
+bool NVisitor::CTypeChecker::IsHasError() const {
+    return hasError;
 }
