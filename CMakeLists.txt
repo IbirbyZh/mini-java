@@ -68,7 +68,9 @@ set(IRTreeSrc
         ir-tree/InFrameAccess.cpp ir-tree/InFrameAccess.hpp
         ir-tree/IFrame.hpp
         ir-tree/MiniJavaFrame.cpp ir-tree/MiniJavaFrame.hpp
-        )
+        ir-tree/IExp.h
+        ir-tree/IStm.h
+        ir-tree/Exp/Const.cpp ir-tree/Exp/Const.h ir-tree/LabelHandler.cpp ir-tree/LabelHandler.h ir-tree/Exp/Name.cpp ir-tree/Exp/Name.h ir-tree/Exp/Temp.cpp ir-tree/Exp/Temp.h)
 
 
 set(BisonFile ${CMAKE_SOURCE_DIR}/bison.y)

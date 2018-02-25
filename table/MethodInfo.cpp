@@ -6,6 +6,11 @@ NTable::CMethodInfo::CMethodInfo(const std::shared_ptr<const NNodes::CMethod> &m
           type(NTable::CStringInternist::GetInstance().Intern(method->GetSignature()->GetType()->ToString())) {
     NTable::CStringInternist &internist = NTable::CStringInternist::GetInstance();
     CStringInternist &stringInternist = NTable::CStringInternist::GetInstance();
+
+    positionParameters.push_back(stringInternist.Intern("this"));
+    parameters.insert(std::make_pair(stringInternist.Intern("this"),
+                                     std::make_shared<CVariableInfo>(stringInternist.Intern("this"), className)));
+
     for (auto &&item: method->GetSignature()->GetParameters()) {
         positionParametersType.push_back(stringInternist.Intern(item->GetType()->ToString()));
         positionParameters.push_back(stringInternist.Intern(item->GetName()));
@@ -17,9 +22,7 @@ NTable::CMethodInfo::CMethodInfo(const std::shared_ptr<const NNodes::CMethod> &m
                 std::make_pair(stringInternist.Intern(item->GetName()), std::make_shared<CVariableInfo>(item))
         );
     }
-    positionParameters.push_back(stringInternist.Intern("this"));
-    parameters.insert(std::make_pair(stringInternist.Intern("this"),
-                                    std::make_shared<CVariableInfo>(stringInternist.Intern("this"), className)));
+
 }
 
 const NTable::CSymbol *NTable::CMethodInfo::GetType() const {

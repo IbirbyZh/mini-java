@@ -16,8 +16,8 @@ if __name__ == '__main__':
         with open(os.devnull, "w") as nothing:
             subprocess.check_call(
                 [
-                    '/Applications/CLion.app/Contents/bin/cmake/bin/cmake',
-                    '--build', '/Users/ibirby/Documents/mini-java/cmake-build-debug',
+                    'cmake',
+                    '--build', 'cmake-build-debug',
                     '--target', 'all',
                     '--', '-j', '2'
                 ],

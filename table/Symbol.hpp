@@ -15,9 +15,7 @@ namespace NTable {
         CSymbol(CSymbol &&other) = default;
         CSymbol &operator=(CSymbol &&other) = default;
 
-        bool operator==(const CSymbol &other) const;
         const std::string &ToString() const;
-        const size_t GetIndex() const;
 
     private:
         const std::string name;
