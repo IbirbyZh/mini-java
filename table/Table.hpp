@@ -34,6 +34,7 @@ namespace NTable {
         bool IsValidParentClasses(const CSymbol *className) const;
         bool IsValidParentClasses(const std::string &className) const;
 
+        const std::unordered_map<const CSymbol *, const std::shared_ptr<const CClassInfo>> &GetClassesInfo() const;
     private:
         std::unordered_map<const CSymbol *, const std::shared_ptr<const CClassInfo>> classesInfo;
         std::vector<const CTableScope> scopes;

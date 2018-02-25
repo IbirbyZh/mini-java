@@ -13,3 +13,9 @@ const NTable::CSymbol *NTable::CVariableInfo::GetType() const {
 const NTable::CSymbol *NTable::CVariableInfo::GetName() const {
     return name;
 }
+
+NTable::CVariableInfo::CVariableInfo(const NTable::CSymbol *nameSymbol, const NTable::CSymbol *typeSymbol)
+        : name(nameSymbol),
+          type(typeSymbol) {
+
+}

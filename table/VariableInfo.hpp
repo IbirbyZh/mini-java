@@ -18,6 +18,7 @@ namespace NTable {
         CVariableInfo &operator=(CVariableInfo &&other) = default;
 
         explicit CVariableInfo(const std::shared_ptr<const NNodes::CTypedId> &typedId);
+        CVariableInfo(const CSymbol *nameSymbol, const CSymbol *typeSymbol);
 
         const CSymbol *GetType() const;
         const CSymbol *GetName() const;

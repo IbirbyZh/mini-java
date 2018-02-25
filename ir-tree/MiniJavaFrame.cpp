@@ -1,13 +1,14 @@
 #include "MiniJavaFrame.hpp"
+#include "InFrameAccess.hpp"
 
 void NIRTree::CMiniJavaFrame::AddFormal(const NTable::CSymbol *name, ...) {
     formalToName.push_back(name);
     ++formalsCount;
-    nameToAccess.insert(std::make_pair(name, nullptr));
+    nameToAccess.insert(std::make_pair(name, std::make_shared<CInFrameAccess>(nameToAccess.size() * 4)));
 }
 
 void NIRTree::CMiniJavaFrame::AddLocal(const NTable::CSymbol *name, ...) {
-    nameToAccess.insert(std::make_pair(name, nullptr));
+    nameToAccess.insert(std::make_pair(name, std::make_shared<CInFrameAccess>(nameToAccess.size() * 4)));
 }
 
 int NIRTree::CMiniJavaFrame::FormalsCount() const {
@@ -34,10 +35,11 @@ std::shared_ptr<const NIRTree::IAccess> NIRTree::CMiniJavaFrame::FindLocalOrForm
 std::shared_ptr<const NIRTree::CMiniJavaFrame>
 NIRTree::CMiniJavaFrame::BuildFrame(std::shared_ptr<const NTable::CMethodInfo> methodInfo) {
     std::shared_ptr<NIRTree::CMiniJavaFrame> frame = std::make_shared<NIRTree::CMiniJavaFrame>();
-    for (auto &&variable: methodInfo->GetVariables()) {
-        frame->AddLocal(variable.first);
-    }
     for (auto &&parameter: methodInfo->GetPositionParameters()) {
         frame->AddFormal(parameter);
     }
+    for (auto &&variable: methodInfo->GetVariables()) {
+        frame->AddLocal(variable.first);
+    }
+    return frame;
 }

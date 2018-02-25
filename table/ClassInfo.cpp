@@ -17,7 +17,7 @@ NTable::CClassInfo::CClassInfo(const std::shared_ptr<const NNodes::CClass> &_cla
     for (auto &&item: _class->GetMethods()) {
         methods.insert(
                 std::make_pair(stringInternist.Intern(item->GetSignature()->GetName()),
-                               std::make_shared<const CMethodInfo>(item))
+                               std::make_shared<const CMethodInfo>(item, name))
         );
     }
 }

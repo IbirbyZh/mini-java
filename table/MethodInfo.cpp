@@ -1,20 +1,25 @@
 #include "MethodInfo.hpp"
 #include "StringInternist.hpp"
 
-NTable::CMethodInfo::CMethodInfo(const std::shared_ptr<const NNodes::CMethod> &method)
+NTable::CMethodInfo::CMethodInfo(const std::shared_ptr<const NNodes::CMethod> &method, const CSymbol *className)
         : name(NTable::CStringInternist::GetInstance().Intern(method->GetSignature()->GetName())),
           type(NTable::CStringInternist::GetInstance().Intern(method->GetSignature()->GetType()->ToString())) {
     NTable::CStringInternist &internist = NTable::CStringInternist::GetInstance();
     CStringInternist &stringInternist = NTable::CStringInternist::GetInstance();
     for (auto &&item: method->GetSignature()->GetParameters()) {
-        positionParameters.push_back(stringInternist.Intern(item->GetType()->ToString()));
-        parameters.insert(std::make_pair(stringInternist.Intern(item->GetName()), std::make_shared<CVariableInfo>(item)));
+        positionParametersType.push_back(stringInternist.Intern(item->GetType()->ToString()));
+        positionParameters.push_back(stringInternist.Intern(item->GetName()));
+        parameters.insert(
+                std::make_pair(stringInternist.Intern(item->GetName()), std::make_shared<CVariableInfo>(item)));
     }
     for (auto &&item: method->GetVariables()) {
         variables.insert(
                 std::make_pair(stringInternist.Intern(item->GetName()), std::make_shared<CVariableInfo>(item))
         );
     }
+    positionParameters.push_back(stringInternist.Intern("this"));
+    parameters.insert(std::make_pair(stringInternist.Intern("this"),
+                                    std::make_shared<CVariableInfo>(stringInternist.Intern("this"), className)));
 }
 
 const NTable::CSymbol *NTable::CMethodInfo::GetType() const {
@@ -37,4 +42,8 @@ NTable::CMethodInfo::GetParameters() const {
 
 const std::vector<const NTable::CSymbol *> &NTable::CMethodInfo::GetPositionParameters() const {
     return positionParameters;
+}
+
+const std::vector<const NTable::CSymbol *> &NTable::CMethodInfo::GetPositionParametersType() const {
+    return positionParametersType;
 }

@@ -149,16 +149,16 @@ void NVisitor::CTypeChecker::Visit(const NNodes::CCallMethod *const node) {
         return;
     }
 
-    if (node->GetParameters().size() != methodInfo->GetPositionParameters().size()) {
+    if (node->GetParameters().size() != methodInfo->GetPositionParametersType().size()) {
         std::cout << "ERROR: Wrong parameters number";
         printPosition(node);
         hasError = true;
         expressionType = nullptr;
         return;
     } else {
-        for (int i = 0; i < methodInfo->GetPositionParameters().size(); ++i) {
+        for (int i = 0; i < methodInfo->GetPositionParametersType().size(); ++i) {
             node->GetParameters()[i]->Visit(this);
-            if (expressionType != methodInfo->GetPositionParameters()[i]) {
+            if (expressionType != methodInfo->GetPositionParametersType()[i]) {
                 std::cout << "ERROR: Wrong parameter type " << expressionType->ToString();
                 printPosition(node);
                 hasError = true;

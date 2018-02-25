@@ -87,3 +87,8 @@ bool NTable::CTable::IsValidParentClasses(const NTable::CSymbol *className) cons
 bool NTable::CTable::IsValidParentClasses(const std::string &className) const {
     return IsValidParentClasses(NTable::CStringInternist::GetInstance().Intern(className));
 }
+
+const std::unordered_map<const NTable::CSymbol *, const std::shared_ptr<const NTable::CClassInfo>> &
+NTable::CTable::GetClassesInfo() const {
+    return classesInfo;
+}

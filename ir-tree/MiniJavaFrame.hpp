@@ -17,6 +17,7 @@ namespace NIRTree {
         std::shared_ptr<const IAccess> Formal(int index) const override;
         std::shared_ptr<const IAccess> FindLocalOrFormal(const NTable::CSymbol *name) const override;
         static std::shared_ptr<const CMiniJavaFrame> BuildFrame(std::shared_ptr<const NTable::CMethodInfo> methodInfo);
+
     private:
         int formalsCount;
         std::vector<const NTable::CSymbol *> formalToName;
